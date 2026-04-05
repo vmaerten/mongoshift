@@ -1,0 +1,52 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write
+  id-token: write # required for npm Trusted Publishing (OIDC)
+
+jobs:
+  publish:
+    name: Publish to npm
+    runs-on: ubuntu-latest
+    environment:
+      # Requires manual approval from a configured reviewer before the job
+      # runs. Configure reviewers at:
+      #   Settings -> Environments -> npm-release -> Required reviewers
+      name: npm-release
+      url: https://www.npmjs.com/package/mongoshift
+    steps:
+      - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v5
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: pnpm
+          registry-url: https://registry.npmjs.org
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Verify tag matches package.json version
+        run: |
+          PKG_VERSION="v$(node -p "require('./package.json').version")"
+          TAG_VERSION="${GITHUB_REF_NAME}"
+          if [ "$PKG_VERSION" != "$TAG_VERSION" ]; then
+            echo "Tag $TAG_VERSION does not match package.json version $PKG_VERSION"
+            exit 1
+          fi
+      - name: Use latest npm for Trusted Publishing
+        # Trusted Publishing requires npm CLI 11.5.1+
+        run: npm install -g npm@latest
+      - name: Publish
+        # No NODE_AUTH_TOKEN: npm detects the GitHub OIDC token via
+        # id-token: write and authenticates against the Trusted
+        # Publisher configured on the mongoshift package on npmjs.com.
+        run: npm publish --provenance --access public
+      - name: Create draft GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          draft: true
+          generate_release_notes: true

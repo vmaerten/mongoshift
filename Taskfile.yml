@@ -1,0 +1,85 @@
+version: "3"
+
+vars:
+  PKG_VERSION:
+    sh: node -p "require('./package.json').version"
+
+tasks:
+  # ---------- Dev ----------
+
+  dev:
+    desc: Start docs dev server
+    cmd: pnpm --dir docs dev
+
+  build:
+    desc: Build the library
+    cmd: pnpm run build
+
+  test:
+    desc: Run all tests (unit + integration)
+    cmd: pnpm run test:all
+
+  lint:
+    desc: Run lint + format check + typecheck
+    cmds:
+      - pnpm run lint
+      - pnpm run format:check
+      - pnpm run typecheck
+
+  check:
+    desc: Full CI check (lint + format + typecheck + test + build)
+    cmds:
+      - task: lint
+      - task: test
+      - task: build
+
+  # ---------- Release ----------
+
+  release:
+    desc: "Bump version, commit, tag, push. Usage: task release VERSION=0.2.0"
+    requires:
+      vars: [VERSION]
+    preconditions:
+      - sh: git diff --quiet && git diff --cached --quiet
+        msg: "Working tree must be clean before releasing"
+      - sh: test "$(git branch --show-current)" = "main"
+        msg: "Must be on main branch to release"
+    cmds:
+      - npm version {{.VERSION}} --no-git-tag-version
+      - cmd: |
+          echo ""
+          echo "  Version bumped to {{.VERSION}}"
+          echo "  Don't forget to update CHANGELOG.md before continuing!"
+          echo ""
+          read -p "  Press Enter when CHANGELOG is ready (or Ctrl+C to abort)..."
+        silent: true
+      - git add package.json CHANGELOG.md
+      - git commit -m "chore(release):\ v{{.VERSION}}"
+      - git tag -a "v{{.VERSION}}" -m "v{{.VERSION}}"
+      - git push --follow-tags
+      - cmd: |
+          echo ""
+          echo "  v{{.VERSION}} tagged and pushed."
+          echo "  The release workflow will handle npm publish."
+          echo ""
+        silent: true
+
+  release:dry:
+    desc: Preview what npm publish would ship
+    cmds:
+      - task: build
+      - pnpm publish --dry-run --no-git-checks
+
+  # ---------- Docs ----------
+
+  docs:dev:
+    desc: Start VitePress dev server
+    cmd: pnpm --dir docs dev
+
+  docs:build:
+    desc: Build VitePress site
+    cmd: pnpm --dir docs build
+
+  docs:preview:
+    desc: Preview built VitePress site
+    cmd: pnpm --dir docs preview
