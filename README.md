@@ -18,8 +18,10 @@ and first-class TypeScript support.
 ## Install
 
 ```bash
-pnpm add mongo-migration mongodb
-# npm i mongo-migration mongodb
+npm  install mongo-migration mongodb
+pnpm add     mongo-migration mongodb
+yarn add     mongo-migration mongodb
+bun  add     mongo-migration mongodb
 ```
 
 ## Quick start
