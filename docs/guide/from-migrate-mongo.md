@@ -63,40 +63,35 @@ Removed keys: `moduleSystem`, `lockCollectionName`, `lockTtl`. New key:
 Migrations get a third `ctx` parameter with `{ dryRun, logger }`. Named
 exports replace `module.exports`:
 
-```ts
-import type { Db, MongoClient } from "mongodb"; // [!code ++]
-import type { MigrationContext } from "mongoshift"; // [!code ++]
+**Before** (`migrate-mongo`):
 
+```js
 module.exports = {
-  // [!code --]
   up: async (db, client) => {
-    // [!code --]
-    export const up = async (
-      // [!code ++]
-      db: Db, // [!code ++]
-      client: MongoClient, // [!code ++]
-      ctx: MigrationContext, // [!code ++]
-    ) => {
-      // [!code ++]
-      ctx.logger.log("creating users"); // [!code ++]
-      if (ctx.dryRun) return; // [!code ++]
-      await db.createCollection("users");
-    }; // [!code ++]
-  }, // [!code --]
+    await db.createCollection("users");
+  },
   down: async (db, client) => {
-    // [!code --]
-    export const down = async (
-      // [!code ++]
-      db: Db, // [!code ++]
-      client: MongoClient, // [!code ++]
-      ctx: MigrationContext, // [!code ++]
-    ) => {
-      // [!code ++]
-      if (ctx.dryRun) return; // [!code ++]
-      await db.collection("users").drop();
-    }; // [!code ++]
-  }, // [!code --]
-}; // [!code --]
+    await db.collection("users").drop();
+  },
+};
+```
+
+**After** (`mongoshift`):
+
+```ts{5-6}
+import type { Db, MongoClient } from "mongodb";
+import type { MigrationContext } from "mongoshift";
+
+export const up = async (db: Db, client: MongoClient, ctx: MigrationContext) => {
+  ctx.logger.log("creating users");
+  if (ctx.dryRun) return;
+  await db.createCollection("users");
+};
+
+export const down = async (db: Db, client: MongoClient, ctx: MigrationContext) => {
+  if (ctx.dryRun) return;
+  await db.collection("users").drop();
+};
 ```
 
 ::: tip You may not need to change anything
