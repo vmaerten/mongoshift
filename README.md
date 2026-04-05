@@ -1,4 +1,4 @@
-# mongo-migration
+# mongoshift
 
 A MongoDB migration tool with dry-run, file-hash drift detection, stored logs,
 and first-class TypeScript support.
@@ -18,27 +18,27 @@ and first-class TypeScript support.
 ## Install
 
 ```bash
-npm  install mongo-migration mongodb
-pnpm add     mongo-migration mongodb
-yarn add     mongo-migration mongodb
-bun  add     mongo-migration mongodb
+npm  install mongoshift mongodb
+pnpm add     mongoshift mongodb
+yarn add     mongoshift mongodb
+bun  add     mongoshift mongodb
 ```
 
 ## Quick start
 
 ```bash
-npx mongo-migration init                 # creates mongo-migration.config.ts + migrations/
-npx mongo-migration create "add users"   # creates 20260405090703-add_users.ts
-npx mongo-migration up                   # applies all pending
-npx mongo-migration status               # shows PENDING / APPLIED / CHANGED
-npx mongo-migration down                 # rolls back the last one
+npx mongoshift init                 # creates mongoshift.config.ts + migrations/
+npx mongoshift create "add users"   # creates 20260405090703-add_users.ts
+npx mongoshift up                   # applies all pending
+npx mongoshift status               # shows PENDING / APPLIED / CHANGED
+npx mongoshift down                 # rolls back the last one
 ```
 
 A migration file looks like this:
 
 ```ts
 import type { Db, MongoClient } from "mongodb";
-import type { MigrationContext } from "mongo-migration";
+import type { MigrationContext } from "mongoshift";
 
 export const up = async (db: Db, client: MongoClient, ctx: MigrationContext) => {
   ctx.logger.log("creating users collection");
@@ -54,7 +54,7 @@ export const down = async (db: Db, client: MongoClient, ctx: MigrationContext) =
 ## Programmatic API
 
 ```ts
-import { loadConfig, connect, up, down, status } from "mongo-migration";
+import { loadConfig, connect, up, down, status } from "mongoshift";
 
 const config = await loadConfig();
 const { db, client, close } = await connect(config);
@@ -69,8 +69,8 @@ try {
 ## Config reference (short)
 
 ```ts
-// mongo-migration.config.ts
-import type { Config } from "mongo-migration";
+// mongoshift.config.ts
+import type { Config } from "mongoshift";
 
 const config: Config = {
   mongodb: { url: "mongodb://localhost:27017", databaseName: "my_db" },
@@ -87,13 +87,13 @@ export default config;
 
 ## Migrating from `migrate-mongo`
 
-`mongo-migration` is API-compatible in spirit but has a few deliberate breaks.
+`mongoshift` is API-compatible in spirit but has a few deliberate breaks.
 
 ### 1. Config file
 
-| migrate-mongo                 | mongo-migration                   |
+| migrate-mongo                 | mongoshift                   |
 | ----------------------------- | --------------------------------- |
-| `migrate-mongo-config.js`     | `mongo-migration.config.ts` (or `.js`) |
+| `migrate-mongo-config.js`     | `mongoshift.config.ts` (or `.js`) |
 | CommonJS by default           | ESM only                          |
 | `moduleSystem: "commonjs"`    | removed (ESM only)                |
 | `lockCollectionName`, `lockTtl` | removed (for now)               |
@@ -110,7 +110,7 @@ migrate-mongo:
 export const up = async (db, client) => { /* ... */ };
 ```
 
-mongo-migration adds a **third `ctx` argument**:
+mongoshift adds a **third `ctx` argument**:
 
 ```ts
 export const up = async (db, client, ctx) => {
@@ -125,13 +125,13 @@ you want to use those features.
 
 ### 3. CLI command mapping
 
-| migrate-mongo         | mongo-migration                 |
+| migrate-mongo         | mongoshift                 |
 | --------------------- | ------------------------------- |
-| `migrate-mongo init`  | `mongo-migration init`          |
-| `migrate-mongo create <name>` | `mongo-migration create <name> [-t template]` |
-| `migrate-mongo up`    | `mongo-migration up [--dry-run] [--force-hash]` |
-| `migrate-mongo down`  | `mongo-migration down [--dry-run] [--block]` |
-| `migrate-mongo status` | `mongo-migration status`       |
+| `migrate-mongo init`  | `mongoshift init`          |
+| `migrate-mongo create <name>` | `mongoshift create <name> [-t template]` |
+| `migrate-mongo up`    | `mongoshift up [--dry-run] [--force-hash]` |
+| `migrate-mongo down`  | `mongoshift down [--dry-run] [--block]` |
+| `migrate-mongo status` | `mongoshift status`       |
 
 ### 4. Keeping existing changelog entries
 

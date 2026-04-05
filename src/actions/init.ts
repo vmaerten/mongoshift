@@ -15,7 +15,7 @@ export interface InitResult {
 export async function init(options: InitOptions = {}): Promise<InitResult> {
   const cwd = options.cwd ?? process.cwd();
   const flavor = options.flavor ?? "ts";
-  const fileName = flavor === "ts" ? "mongo-migration.config.ts" : "mongo-migration.config.js";
+  const fileName = flavor === "ts" ? "mongoshift.config.ts" : "mongoshift.config.js";
   const configPath = path.join(cwd, fileName);
 
   let exists = false;

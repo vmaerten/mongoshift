@@ -4,9 +4,9 @@ import fs from "node:fs/promises";
 import type { Config, ResolvedConfig } from "./types.js";
 
 export const DEFAULT_CONFIG_FILENAMES = [
-  "mongo-migration.config.ts",
-  "mongo-migration.config.js",
-  "mongo-migration.config.mjs",
+  "mongoshift.config.ts",
+  "mongoshift.config.js",
+  "mongoshift.config.mjs",
 ];
 
 const DEFAULTS: Omit<Config, "mongodb"> = {

@@ -12,7 +12,7 @@ import type { MigrationRunReport } from "./types.js";
 
 const program = new Command();
 program
-  .name("mongo-migration")
+  .name("mongoshift")
   .description("MongoDB migration tool with dry-run, file-hash detection, and stored logs")
   .version("0.1.0");
 

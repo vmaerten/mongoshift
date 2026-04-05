@@ -1,5 +1,5 @@
 export const TS_MIGRATION_TEMPLATE = `import type { Db, MongoClient } from "mongodb";
-import type { MigrationContext } from "mongo-migration";
+import type { MigrationContext } from "mongoshift";
 
 export const up = async (
   db: Db,
@@ -38,7 +38,7 @@ export const down = async (db, client, ctx) => {
 };
 `;
 
-export const DEFAULT_CONFIG_TEMPLATE_TS = `import type { Config } from "mongo-migration";
+export const DEFAULT_CONFIG_TEMPLATE_TS = `import type { Config } from "mongoshift";
 
 const config: Config = {
   mongodb: {
@@ -55,7 +55,7 @@ const config: Config = {
 export default config;
 `;
 
-export const DEFAULT_CONFIG_TEMPLATE_JS = `/** @type {import('mongo-migration').Config} */
+export const DEFAULT_CONFIG_TEMPLATE_JS = `/** @type {import('mongoshift').Config} */
 const config = {
   mongodb: {
     url: "mongodb://localhost:27017",

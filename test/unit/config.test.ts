@@ -19,7 +19,7 @@ describe("loadConfig", () => {
     const content = `export default {
       mongodb: { url: "mongodb://localhost:27017", databaseName: "test_db" }
     };`;
-    await fs.writeFile(path.join(tmpDir, "mongo-migration.config.js"), content);
+    await fs.writeFile(path.join(tmpDir, "mongoshift.config.js"), content);
 
     const cfg = await loadConfig({ cwd: tmpDir });
     expect(cfg.mongodb.url).toBe("mongodb://localhost:27017");
@@ -42,7 +42,7 @@ describe("loadConfig", () => {
       migrationsDir: "my-migs",
       migrationFileExtension: ".js"
     };`;
-    await fs.writeFile(path.join(tmpDir, "mongo-migration.config.js"), content);
+    await fs.writeFile(path.join(tmpDir, "mongoshift.config.js"), content);
 
     const cfg = await loadConfig({ cwd: tmpDir });
     expect(cfg.changelogCollectionName).toBe("my_changelog");
@@ -58,7 +58,7 @@ describe("loadConfig", () => {
 
   it("throws on missing mongodb fields", async () => {
     await fs.writeFile(
-      path.join(tmpDir, "mongo-migration.config.js"),
+      path.join(tmpDir, "mongoshift.config.js"),
       `export default { mongodb: { url: "x" } };`,
     );
     await expect(loadConfig({ cwd: tmpDir })).rejects.toBeInstanceOf(ConfigError);

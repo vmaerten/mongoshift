@@ -1,9 +1,9 @@
 {
-  "name": "mongo-migration",
+  "name": "mongoshift",
   "version": "0.1.0",
   "description": "MongoDB migration tool with dry-run, file-hash detection, and stored logs",
   "bin": {
-    "mongo-migration": "dist/cli.js"
+    "mongoshift": "dist/cli.js"
   },
   "files": [
     "dist",
