@@ -28,45 +28,31 @@ migration path.
 
 ## 1. Config file
 
-**Before** (`migrate-mongo-config.js`):
-
-```js
-// migrate-mongo-config.js
-const config = {
-  mongodb: {
-    url: "mongodb://localhost:27017",
-    databaseName: "my_db",
-  },
-  migrationsDir: "migrations",
-  changelogCollectionName: "changelog",
-  lockCollectionName: "changelog_lock",
-  lockTtl: 0,
-  migrationFileExtension: ".js",
-  useFileHash: false,
-  moduleSystem: "commonjs",
-};
-module.exports = config;
-```
-
-**After** (`mongoshift.config.ts`):
+Rename `migrate-mongo-config.js` to `mongoshift.config.ts` (or `.js`), switch
+to ESM, and drop the removed keys:
 
 ```ts
-// mongoshift.config.ts
-import type { Config } from "mongoshift";
+import type { Config } from "mongoshift"; // [!code ++]
 
-const config: Config = {
+const config: Config = { // [!code ++]
+const config = { // [!code --]
   mongodb: {
     url: "mongodb://localhost:27017",
     databaseName: "my_db",
   },
   migrationsDir: "migrations",
   changelogCollectionName: "changelog",
-  migrationFileExtension: ".ts",
-  dateFormat: "YYYYMMDDHHmmss",
+  lockCollectionName: "changelog_lock", // [!code --]
+  lockTtl: 0, // [!code --]
+  migrationFileExtension: ".ts", // [!code ++]
+  migrationFileExtension: ".js", // [!code --]
+  dateFormat: "YYYYMMDDHHmmss", // [!code ++]
   useFileHash: false,
+  moduleSystem: "commonjs", // [!code --]
 };
 
-export default config;
+export default config; // [!code ++]
+module.exports = config; // [!code --]
 ```
 
 Removed keys: `moduleSystem`, `lockCollectionName`, `lockTtl`. New key:
@@ -74,34 +60,43 @@ Removed keys: `moduleSystem`, `lockCollectionName`, `lockTtl`. New key:
 
 ## 2. Migration signature - breaking change
 
-**Before:**
-
-```js
-module.exports = {
-  up: async (db, client) => {
-    await db.createCollection("users");
-  },
-  down: async (db, client) => {
-    await db.collection("users").drop();
-  },
-};
-```
-
-**After:**
+Migrations get a third `ctx` parameter with `{ dryRun, logger }`. Named
+exports replace `module.exports`:
 
 ```ts
-import type { Db, MongoClient } from "mongodb";
-import type { MigrationContext } from "mongoshift";
+import type { Db, MongoClient } from "mongodb"; // [!code ++]
+import type { MigrationContext } from "mongoshift"; // [!code ++]
 
-export const up = async (db: Db, client: MongoClient, ctx: MigrationContext) => {
-  ctx.logger.log("creating users"); // NEW: persisted in changelog
-  if (ctx.dryRun) return; // NEW: dry-run aware
-  await db.createCollection("users");
-};
-
-export const down = async (db: Db, client: MongoClient, ctx: MigrationContext) => {
-  await db.collection("users").drop();
-};
+module.exports = {
+  // [!code --]
+  up: async (db, client) => {
+    // [!code --]
+    export const up = async (
+      // [!code ++]
+      db: Db, // [!code ++]
+      client: MongoClient, // [!code ++]
+      ctx: MigrationContext, // [!code ++]
+    ) => {
+      // [!code ++]
+      ctx.logger.log("creating users"); // [!code ++]
+      if (ctx.dryRun) return; // [!code ++]
+      await db.createCollection("users");
+    }; // [!code ++]
+  }, // [!code --]
+  down: async (db, client) => {
+    // [!code --]
+    export const down = async (
+      // [!code ++]
+      db: Db, // [!code ++]
+      client: MongoClient, // [!code ++]
+      ctx: MigrationContext, // [!code ++]
+    ) => {
+      // [!code ++]
+      if (ctx.dryRun) return; // [!code ++]
+      await db.collection("users").drop();
+    }; // [!code ++]
+  }, // [!code --]
+}; // [!code --]
 ```
 
 ::: tip You may not need to change anything

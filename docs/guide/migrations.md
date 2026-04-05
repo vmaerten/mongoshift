@@ -26,7 +26,7 @@ makes it look pending again, and a new row will be inserted on the next `up`.
 
 ## Anatomy
 
-```ts
+```ts{5,6}
 import type { Db, MongoClient } from "mongodb";
 import type { MigrationContext } from "mongoshift";
 
@@ -144,6 +144,24 @@ If you have a file named `sample-migration.ts` (matching your extension) in
   [file-hash](./file-hash.md) to catch this.
 - **Don't rely on ambient state** (Date.now, random IDs) without logging it.
   :::
+
+### Example: no app imports
+
+```ts
+import { User } from "../src/models/user"; // [!code error]
+import type { Db, MongoClient } from "mongodb"; // [!code ++]
+import type { MigrationContext } from "mongoshift"; // [!code ++]
+
+// BAD: imports the User model; if fields are later renamed, // [!code error]
+// the migration silently breaks the next time it runs in a fresh env. // [!code error]
+export const up = async (db: Db, _client: MongoClient, ctx: MigrationContext) => {
+  await db.collection(User.collectionName).updateMany({}, {}); // [!code error]
+
+  // GOOD: inline the collection name and fields the migration needs. // [!code ++]
+  if (ctx.dryRun) return; // [!code ++]
+  await db.collection("users").updateMany({}, { $set: { verified: false } }); // [!code ++]
+};
+```
 
 ## Programmatic run
 

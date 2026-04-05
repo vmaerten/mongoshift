@@ -21,15 +21,25 @@ separate TypeScript runtime.
 
 Install alongside the official `mongodb` driver, which is a peer dependency:
 
-```bash
-npm install mongoshift mongodb
-# or
+::: code-group
+
+```bash [pnpm]
 pnpm add mongoshift mongodb
-# or
+```
+
+```bash [npm]
+npm install mongoshift mongodb
+```
+
+```bash [yarn]
 yarn add mongoshift mongodb
-# or
+```
+
+```bash [bun]
 bun add mongoshift mongodb
 ```
+
+:::
 
 ## Scaffold a project
 

@@ -106,8 +106,9 @@ treats entries with no stored hash as **not-drifted** - so flipping
 
 New migrations applied after you enable `useFileHash` will be stored with
 their hash. **Existing entries are never updated retroactively** - their
-`fileHash` field stays missing unless you backfill it yourself. Run this
-one-off script to backfill:
+`fileHash` field stays missing unless you backfill it yourself.
+
+::: details One-off backfill script
 
 ```ts
 import crypto from "node:crypto";
@@ -134,6 +135,8 @@ try {
   await close();
 }
 ```
+
+:::
 
 ## `StatusItem` shape with hashing
 
