@@ -53,9 +53,9 @@ const features = [
 
 const terminalSteps = [
   { cmd: "pnpm add mongoshift mongodb", comment: "" },
-  { cmd: "npx mongoshift init", comment: "# creates mongoshift.config.ts + migrations/" },
-  { cmd: 'npx mongoshift create "add users"', comment: "# creates 20260405-add_users.ts" },
-  { cmd: "npx mongoshift up", comment: "# applies all pending" },
+  { cmd: "pnpm mongoshift init", comment: "# creates mongoshift.config.ts + migrations/" },
+  { cmd: 'pnpm mongoshift create "add users"', comment: "# creates 20260405-add_users.ts" },
+  { cmd: "pnpm mongoshift up", comment: "# applies all pending" },
 ];
 </script>
 
