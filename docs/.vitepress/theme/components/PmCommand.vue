@@ -57,12 +57,7 @@ function selectPm(pm: PmChoice) {
     </div>
     <div class="pm-body">
       <code class="pm-cmd">{{ currentCommand }}</code>
-      <button
-        class="pm-copy"
-        type="button"
-        :aria-label="`Copy ${currentCommand}`"
-        @click="copy"
-      >
+      <button class="pm-copy" type="button" :aria-label="`Copy ${currentCommand}`" @click="copy">
         {{ copied ? "copied" : "copy" }}
       </button>
     </div>

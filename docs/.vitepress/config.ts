@@ -20,6 +20,20 @@ export default defineConfig({
           "MongoDB migrations with receipts. Dry-run, stored logs, file-hash drift detection.",
       },
     ],
+    ["meta", { property: "og:image", content: "/og-image.svg" }],
+    ["meta", { property: "og:image:width", content: "1200" }],
+    ["meta", { property: "og:image:height", content: "630" }],
+    ["meta", { name: "twitter:card", content: "summary_large_image" }],
+    ["meta", { name: "twitter:title", content: "mongoshift" }],
+    [
+      "meta",
+      {
+        name: "twitter:description",
+        content:
+          "MongoDB migrations with receipts. Dry-run, stored logs, file-hash drift detection.",
+      },
+    ],
+    ["meta", { name: "twitter:image", content: "/og-image.svg" }],
   ],
 
   themeConfig: {
@@ -50,6 +64,7 @@ export default defineConfig({
         {
           text: "Getting Started",
           items: [
+            { text: "Why mongoshift", link: "/guide/why" },
             { text: "Installation", link: "/guide/getting-started" },
             { text: "Quick Start", link: "/guide/quick-start" },
           ],

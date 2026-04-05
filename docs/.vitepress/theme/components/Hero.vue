@@ -55,7 +55,21 @@ function copyInstall() {
     <section class="hero" aria-labelledby="hero-headline">
       <div class="hero-grid">
         <div class="hero-copy">
-          <p class="eyebrow"><span class="eyebrow-mark">→</span> MongoDB migrations</p>
+          <p class="eyebrow">
+            <svg
+              class="eyebrow-mongo"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="#00ED64"
+              aria-hidden="true"
+            >
+              <path
+                d="M17.193 9.555c-1.264-5.58-4.252-7.414-4.573-8.115-.28-.394-.53-.954-.735-1.44-.036.495-.055.685-.523 1.184-.723.566-4.438 3.682-4.74 10.02-.282 5.912 4.27 9.435 4.888 9.884l.07.05A73.49 73.49 0 0111.91 24h.481c.114-1.032.284-2.056.51-3.07.417-.296.604-.463.85-.693a11.342 11.342 0 003.639-8.464c.01-.814-.103-1.662-.197-2.218zm-5.336 8.195s0-8.291.275-8.29c.213 0 .49 10.695.49 10.695-.381-.045-.765-1.76-.765-2.405z"
+              />
+            </svg>
+            MongoDB migrations
+          </p>
           <h1 id="hero-headline" class="headline">
             MongoDB migrations
             <span class="headline-accent">with receipts.</span>
@@ -287,12 +301,9 @@ function copyInstall() {
   gap: 10px;
   margin: 0 0 20px;
 }
-.eyebrow-mark {
-  color: var(--ms-violet-500);
-  font-weight: 700;
-}
-.dark .eyebrow-mark {
-  color: var(--ms-violet-400);
+.eyebrow-mongo {
+  display: inline-block;
+  vertical-align: -2px;
 }
 
 .headline {
@@ -367,25 +378,66 @@ function copyInstall() {
   font-family: var(--vp-font-family-base);
 }
 .cta-primary {
+  position: relative;
+  overflow: hidden;
   background: var(--ms-violet-500);
   color: #ffffff;
   border-color: var(--ms-violet-500);
   box-shadow:
     0 1px 0 rgba(0, 0, 0, 0.05),
     inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  transition:
+    box-shadow 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.18s ease;
+}
+.cta-primary > * {
+  position: relative;
+  z-index: 1;
+}
+/* Diagonal shimmer that sweeps across on hover, like a scanline passing
+   through an armed terminal prompt */
+.cta-primary::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    110deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.22) 50%,
+    transparent 70%
+  );
+  transform: translateX(-101%);
+  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+  z-index: 0;
+}
+.cta-primary:hover::before {
+  transform: translateX(101%);
 }
 .cta-primary:hover {
-  background: var(--ms-violet-400);
-  border-color: var(--ms-violet-400);
-  transform: translateY(-1px);
+  border-color: var(--ms-violet-300);
+  box-shadow:
+    0 1px 0 rgba(0, 0, 0, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    0 0 0 1px rgba(196, 181, 253, 0.35),
+    0 8px 24px -4px rgba(139, 92, 246, 0.5);
+}
+.cta-primary:focus-visible {
+  outline: none;
+  border-color: var(--ms-violet-300);
+  box-shadow:
+    0 1px 0 rgba(0, 0, 0, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    0 0 0 2px var(--ms-violet-300),
+    0 8px 24px -4px rgba(139, 92, 246, 0.5);
 }
 .cta-arrow {
   display: inline-block;
   font-family: var(--vp-font-family-mono);
-  transition: transform 0.15s ease;
+  transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .cta-primary:hover .cta-arrow {
-  transform: translateX(3px);
+  transform: translateX(4px);
 }
 .cta-secondary {
   background: transparent;
