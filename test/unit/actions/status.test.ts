@@ -6,10 +6,7 @@ import path from "node:path";
 import os from "node:os";
 import { status } from "../../../src/actions/status.js";
 import { insertEntry } from "../../../src/changelog.js";
-import type {
-  ChangelogEntry,
-  ResolvedConfig,
-} from "../../../src/types.js";
+import type { ChangelogEntry, ResolvedConfig } from "../../../src/types.js";
 
 let mongod: MongoMemoryServer;
 let client: MongoClient;
@@ -28,10 +25,7 @@ function cfg(useFileHash = false): ResolvedConfig {
   });
 }
 
-function appliedEntry(
-  fileName: string,
-  hash?: string,
-): ChangelogEntry {
+function appliedEntry(fileName: string, hash?: string): ChangelogEntry {
   return {
     fileName,
     appliedAt: new Date(),
@@ -81,11 +75,7 @@ describe("status", () => {
   it("detects CHANGED when file hash drifts", async () => {
     const file = path.join(tmp, "a.js");
     await fs.writeFile(file, "original");
-    await insertEntry(
-      db,
-      cfg(true),
-      appliedEntry("a.js", "stale-hash-abcdef"),
-    );
+    await insertEntry(db, cfg(true), appliedEntry("a.js", "stale-hash-abcdef"));
     const s = await status(db, cfg(true));
     expect(s[0]!.status).toBe("CHANGED");
     expect(s[0]!.storedHash).toBe("stale-hash-abcdef");
@@ -97,10 +87,7 @@ describe("status", () => {
     const file = path.join(tmp, "a.js");
     await fs.writeFile(file, "content");
     const crypto = await import("node:crypto");
-    const hash = crypto
-      .createHash("sha256")
-      .update("content")
-      .digest("hex");
+    const hash = crypto.createHash("sha256").update("content").digest("hex");
     await insertEntry(db, cfg(true), appliedEntry("a.js", hash));
     const s = await status(db, cfg(true));
     expect(s[0]!.status).toBe("APPLIED");

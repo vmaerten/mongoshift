@@ -73,8 +73,6 @@ const config = {
 export default config;
 `;
 
-export function defaultMigrationTemplate(
-  extension: ".ts" | ".js" | ".mjs",
-): string {
+export function defaultMigrationTemplate(extension: ".ts" | ".js" | ".mjs"): string {
   return extension === ".ts" ? TS_MIGRATION_TEMPLATE : JS_MIGRATION_TEMPLATE;
 }

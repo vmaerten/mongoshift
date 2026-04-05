@@ -7,9 +7,7 @@ import type { ResolvedConfig } from "../../../src/types.js";
 
 let tmp: string;
 
-function cfg(
-  overrides: Partial<ResolvedConfig> = {},
-): ResolvedConfig {
+function cfg(overrides: Partial<ResolvedConfig> = {}): ResolvedConfig {
   return Object.freeze({
     mongodb: { url: "x", databaseName: "d" },
     migrationsDir: tmp,
@@ -42,20 +40,14 @@ describe("create action", () => {
 
   it("respects custom dateFormat", async () => {
     const now = new Date(2026, 0, 1, 0, 0, 0);
-    const file = await create(
-      cfg({ dateFormat: "YYYY-MM-DD" }),
-      "add users",
-      { now },
-    );
+    const file = await create(cfg({ dateFormat: "YYYY-MM-DD" }), "add users", { now });
     expect(file).toBe("2026-01-01-add_users.ts");
   });
 
   it("uses js template when extension is .js", async () => {
-    const file = await create(
-      cfg({ migrationFileExtension: ".js" }),
-      "x",
-      { now: new Date(2026, 0, 1, 0, 0, 0) },
-    );
+    const file = await create(cfg({ migrationFileExtension: ".js" }), "x", {
+      now: new Date(2026, 0, 1, 0, 0, 0),
+    });
     expect(file.endsWith(".js")).toBe(true);
     const content = await fs.readFile(path.join(tmp, file), "utf8");
     expect(content).toContain("@param");
@@ -73,10 +65,7 @@ describe("create action", () => {
   });
 
   it("--template flag overrides sample-migration", async () => {
-    await fs.writeFile(
-      path.join(tmp, "sample-migration.ts"),
-      "// SAMPLE\n",
-    );
+    await fs.writeFile(path.join(tmp, "sample-migration.ts"), "// SAMPLE\n");
     const custom = path.join(tmp, "my-template.ts");
     await fs.writeFile(custom, "// CUSTOM FLAG\n");
     const file = await create(cfg(), "x", {

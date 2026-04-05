@@ -33,18 +33,13 @@ program
   .description("Create a new migration file")
   .option("-f, --file <path>", "Path to config file")
   .option("-t, --template <path>", "Path to a custom template file")
-  .action(
-    async (
-      description: string,
-      opts: { file?: string; template?: string },
-    ) => {
-      const config = await loadConfig({ file: opts.file });
-      const fileName = await create(config, description, {
-        template: opts.template,
-      });
-      console.log(`Created migration: ${fileName}`);
-    },
-  );
+  .action(async (description: string, opts: { file?: string; template?: string }) => {
+    const config = await loadConfig({ file: opts.file });
+    const fileName = await create(config, description, {
+      template: opts.template,
+    });
+    console.log(`Created migration: ${fileName}`);
+  });
 
 program
   .command("up")
@@ -52,21 +47,19 @@ program
   .option("-f, --file <path>", "Path to config file")
   .option("--dry-run", "Run migrations without persisting to changelog")
   .option("--force-hash", "Continue even if file hash drift is detected")
-  .action(
-    async (opts: { file?: string; dryRun?: boolean; forceHash?: boolean }) => {
-      const config = await loadConfig({ file: opts.file });
-      const handle = await connect(config);
-      try {
-        const result = await up(handle.db, handle.client, config, {
-          dryRun: opts.dryRun,
-          forceHash: opts.forceHash,
-        });
-        printRunResult(result.migrations, result.dryRun ? "DRY-RUN UP" : "UP");
-      } finally {
-        await handle.close();
-      }
-    },
-  );
+  .action(async (opts: { file?: string; dryRun?: boolean; forceHash?: boolean }) => {
+    const config = await loadConfig({ file: opts.file });
+    const handle = await connect(config);
+    try {
+      const result = await up(handle.db, handle.client, config, {
+        dryRun: opts.dryRun,
+        forceHash: opts.forceHash,
+      });
+      printRunResult(result.migrations, result.dryRun ? "DRY-RUN UP" : "UP");
+    } finally {
+      await handle.close();
+    }
+  });
 
 program
   .command("down")
@@ -74,24 +67,19 @@ program
   .option("-f, --file <path>", "Path to config file")
   .option("--dry-run", "Rollback without persisting changes to changelog")
   .option("--block", "Rollback the entire last migration batch")
-  .action(
-    async (opts: { file?: string; dryRun?: boolean; block?: boolean }) => {
-      const config = await loadConfig({ file: opts.file });
-      const handle = await connect(config);
-      try {
-        const result = await down(handle.db, handle.client, config, {
-          dryRun: opts.dryRun,
-          block: opts.block,
-        });
-        printRunResult(
-          result.migrations,
-          result.dryRun ? "DRY-RUN DOWN" : "DOWN",
-        );
-      } finally {
-        await handle.close();
-      }
-    },
-  );
+  .action(async (opts: { file?: string; dryRun?: boolean; block?: boolean }) => {
+    const config = await loadConfig({ file: opts.file });
+    const handle = await connect(config);
+    try {
+      const result = await down(handle.db, handle.client, config, {
+        dryRun: opts.dryRun,
+        block: opts.block,
+      });
+      printRunResult(result.migrations, result.dryRun ? "DRY-RUN DOWN" : "DOWN");
+    } finally {
+      await handle.close();
+    }
+  });
 
 program
   .command("status")
@@ -106,11 +94,7 @@ program
         head: ["File", "Status", "Applied At"],
       });
       for (const i of items) {
-        table.push([
-          i.fileName,
-          i.status,
-          i.appliedAt ? i.appliedAt.toISOString() : "-",
-        ]);
+        table.push([i.fileName, i.status, i.appliedAt ? i.appliedAt.toISOString() : "-"]);
       }
       console.log(table.toString());
     } finally {
@@ -118,10 +102,7 @@ program
     }
   });
 
-function printRunResult(
-  reports: MigrationRunReport[],
-  label: string,
-): void {
+function printRunResult(reports: MigrationRunReport[], label: string): void {
   console.log(`[${label}] ${reports.length} migration(s)`);
   for (const r of reports) {
     const tag = r.applied ? "OK" : "SKIP";

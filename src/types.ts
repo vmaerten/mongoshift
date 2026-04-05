@@ -41,11 +41,7 @@ export interface MigrationContext {
   logger: Logger;
 }
 
-export type MigrationFn = (
-  db: Db,
-  client: MongoClient,
-  ctx: MigrationContext,
-) => Promise<void>;
+export type MigrationFn = (db: Db, client: MongoClient, ctx: MigrationContext) => Promise<void>;
 
 export interface MigrationModule {
   up: MigrationFn;

@@ -66,11 +66,9 @@ function validate(raw: unknown, source: string): Config {
   const merged: Config = {
     mongodb: obj.mongodb,
     migrationsDir: obj.migrationsDir ?? DEFAULTS.migrationsDir,
-    migrationFileExtension:
-      obj.migrationFileExtension ?? DEFAULTS.migrationFileExtension,
+    migrationFileExtension: obj.migrationFileExtension ?? DEFAULTS.migrationFileExtension,
     dateFormat: obj.dateFormat ?? DEFAULTS.dateFormat,
-    changelogCollectionName:
-      obj.changelogCollectionName ?? DEFAULTS.changelogCollectionName,
+    changelogCollectionName: obj.changelogCollectionName ?? DEFAULTS.changelogCollectionName,
     useFileHash: obj.useFileHash ?? DEFAULTS.useFileHash,
     moduleSystem: "esm",
   };

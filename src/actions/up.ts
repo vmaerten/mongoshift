@@ -8,10 +8,7 @@ import type {
 } from "../types.js";
 import { insertEntry } from "../changelog.js";
 import { createCaptureLogger } from "../logger.js";
-import {
-  computeFileHashInDir,
-  loadMigration,
-} from "../migrations-dir.js";
+import { computeFileHashInDir, loadMigration } from "../migrations-dir.js";
 import { status } from "./status.js";
 
 export class HashDriftError extends Error {
@@ -36,9 +33,7 @@ export async function up(
   const statusItems = await status(db, config);
 
   if (config.useFileHash && !forceHash) {
-    const changed = statusItems
-      .filter((s) => s.status === "CHANGED")
-      .map((s) => s.fileName);
+    const changed = statusItems.filter((s) => s.status === "CHANGED").map((s) => s.fileName);
     if (changed.length > 0) throw new HashDriftError(changed);
   }
 

@@ -1,10 +1,5 @@
 import type { Db, MongoClient } from "mongodb";
-import type {
-  DownOptions,
-  DownResult,
-  MigrationRunReport,
-  ResolvedConfig,
-} from "../types.js";
+import type { DownOptions, DownResult, MigrationRunReport, ResolvedConfig } from "../types.js";
 import { getLastAppliedEntries, removeEntry } from "../changelog.js";
 import { createCaptureLogger } from "../logger.js";
 import { loadMigration } from "../migrations-dir.js";

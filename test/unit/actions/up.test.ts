@@ -31,9 +31,7 @@ async function writeMigration(
 ): Promise<void> {
   const upBody = body.up ?? "";
   const downBody = body.down ?? "";
-  const logLine = body.logInUp
-    ? `ctx.logger.log(${JSON.stringify(body.logInUp)});`
-    : "";
+  const logLine = body.logInUp ? `ctx.logger.log(${JSON.stringify(body.logInUp)});` : "";
   const content = `
     export const up = async (db, client, ctx) => {
       ${logLine}
@@ -57,7 +55,10 @@ afterAll(async () => {
 
 beforeEach(async () => {
   await db.collection("changelog").deleteMany({});
-  await db.collection("widgets").drop().catch(() => {});
+  await db
+    .collection("widgets")
+    .drop()
+    .catch(() => {});
   tmp = await fs.mkdtemp(path.join(os.tmpdir(), "mm-up-"));
 });
 
@@ -72,16 +73,10 @@ describe("up action", () => {
 
     const result = await up(db, client, cfg());
     expect(result.dryRun).toBe(false);
-    expect(result.migrations.map((m) => m.fileName)).toEqual([
-      "20260101-a.mjs",
-      "20260102-b.mjs",
-    ]);
+    expect(result.migrations.map((m) => m.fileName)).toEqual(["20260101-a.mjs", "20260102-b.mjs"]);
     expect(result.migrations.every((m) => m.applied)).toBe(true);
     const applied = await getAppliedEntries(db, cfg());
-    expect(applied.map((e) => e.fileName)).toEqual([
-      "20260101-a.mjs",
-      "20260102-b.mjs",
-    ]);
+    expect(applied.map((e) => e.fileName)).toEqual(["20260101-a.mjs", "20260102-b.mjs"]);
     expect(applied[0]!.migrationBlock).toBe(applied[1]!.migrationBlock);
     const widgets = await db.collection("widgets").find().toArray();
     expect(widgets).toHaveLength(2);
@@ -154,9 +149,7 @@ describe("up action", () => {
     );
     // Add another pending one so there's something to do
     await writeMigration("b.mjs");
-    await expect(up(db, client, cfg(true))).rejects.toBeInstanceOf(
-      HashDriftError,
-    );
+    await expect(up(db, client, cfg(true))).rejects.toBeInstanceOf(HashDriftError);
   });
 
   it("forceHash overrides drift refusal", async () => {

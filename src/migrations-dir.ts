@@ -15,9 +15,7 @@ export async function ensureMigrationsDir(dir: string): Promise<void> {
 /**
  * Returns migration files (sorted by name) excluding the sample template.
  */
-export async function listMigrationFiles(
-  config: ResolvedConfig,
-): Promise<string[]> {
+export async function listMigrationFiles(config: ResolvedConfig): Promise<string[]> {
   try {
     const entries = await fs.readdir(config.migrationsDir);
     return entries
@@ -53,10 +51,7 @@ export async function loadMigration(
   const url = pathToFileURL(fullPath).href;
   const mod = await import(url);
   const candidate = mod.default ?? mod;
-  if (
-    typeof candidate.up !== "function" ||
-    typeof candidate.down !== "function"
-  ) {
+  if (typeof candidate.up !== "function" || typeof candidate.down !== "function") {
     throw new MigrationsDirError(
       `Migration ${fileName} must export "up" and "down" async functions`,
     );
@@ -64,9 +59,7 @@ export async function loadMigration(
   return { up: candidate.up, down: candidate.down };
 }
 
-export async function resolveSampleMigrationPath(
-  config: ResolvedConfig,
-): Promise<string | null> {
+export async function resolveSampleMigrationPath(config: ResolvedConfig): Promise<string | null> {
   const candidate = path.join(
     config.migrationsDir,
     `${SAMPLE_BASENAME}${config.migrationFileExtension}`,

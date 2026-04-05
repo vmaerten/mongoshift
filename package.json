@@ -2,6 +2,13 @@
   "name": "mongo-migration",
   "version": "0.1.0",
   "description": "MongoDB migration tool with dry-run, file-hash detection, and stored logs",
+  "bin": {
+    "mongo-migration": "dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -11,35 +18,36 @@
       "import": "./dist/index.js"
     }
   },
-  "bin": {
-    "mongo-migration": "dist/cli.js"
-  },
-  "files": [
-    "dist",
-    "README.md"
-  ],
   "scripts": {
-    "build": "tsc && chmod +x dist/cli.js",
+    "build": "tsdown",
+    "typecheck": "tsc --noEmit",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
     "test": "vitest run --exclude test/integration.test.ts",
     "test:watch": "vitest --exclude test/integration.test.ts",
     "test:integration": "vitest run test/integration.test.ts",
     "test:all": "vitest run"
   },
-  "engines": {
-    "node": ">=20.0.0"
-  },
   "dependencies": {
     "cli-table3": "^0.6.5",
     "commander": "^14.0.0"
   },
+  "devDependencies": {
+    "@types/node": "^24.12.2",
+    "mongodb": "^6.10.0",
+    "mongodb-memory-server": "^10.1.0",
+    "oxfmt": "^0.43.0",
+    "oxlint": "^1.58.0",
+    "tsdown": "^0.21.7",
+    "typescript": "^5.6.0",
+    "vitest": "^2.1.0"
+  },
   "peerDependencies": {
     "mongodb": "^6.0.0"
   },
-  "devDependencies": {
-    "@types/node": "^22.0.0",
-    "mongodb": "^6.10.0",
-    "mongodb-memory-server": "^10.1.0",
-    "typescript": "^5.6.0",
-    "vitest": "^2.1.0"
+  "engines": {
+    "node": ">=24.0.0"
   }
 }

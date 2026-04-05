@@ -40,10 +40,7 @@ describe("migrations-dir", () => {
     await fs.writeFile(path.join(tmp, "sample-migration.js"), "");
     await fs.writeFile(path.join(tmp, "README.md"), "");
     const files = await listMigrationFiles(makeConfig(tmp));
-    expect(files).toEqual([
-      "20260101000000-a.js",
-      "20260101000001-b.js",
-    ]);
+    expect(files).toEqual(["20260101000000-a.js", "20260101000001-b.js"]);
   });
 
   it("listMigrationFiles returns [] when dir missing", async () => {
@@ -62,9 +59,7 @@ describe("migrations-dir", () => {
     const f = path.join(tmp, "x.js");
     await fs.writeFile(f, "hello");
     const h = await computeFileHash(f);
-    expect(h).toBe(
-      "2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824",
-    );
+    expect(h).toBe("2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824");
   });
 
   it("loadMigration imports ESM module with up/down", async () => {
@@ -83,18 +78,14 @@ describe("migrations-dir", () => {
   it("loadMigration throws if up/down missing", async () => {
     const file = "bad.mjs";
     await fs.writeFile(path.join(tmp, file), `export const up = async () => {};`);
-    await expect(loadMigration(makeConfig(tmp), file)).rejects.toBeInstanceOf(
-      MigrationsDirError,
-    );
+    await expect(loadMigration(makeConfig(tmp), file)).rejects.toBeInstanceOf(MigrationsDirError);
   });
 
   it("resolveSampleMigrationPath returns path when exists, null otherwise", async () => {
     const cfg = makeConfig(tmp, ".js");
     expect(await resolveSampleMigrationPath(cfg)).toBeNull();
     await fs.writeFile(path.join(tmp, "sample-migration.js"), "");
-    expect(await resolveSampleMigrationPath(cfg)).toBe(
-      path.join(tmp, "sample-migration.js"),
-    );
+    expect(await resolveSampleMigrationPath(cfg)).toBe(path.join(tmp, "sample-migration.js"));
   });
 
   it("ensureMigrationsDir creates directory recursively", async () => {

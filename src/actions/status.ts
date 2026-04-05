@@ -1,10 +1,7 @@
 import type { Db } from "mongodb";
 import type { ResolvedConfig, StatusItem } from "../types.js";
 import { getAppliedEntries } from "../changelog.js";
-import {
-  computeFileHashInDir,
-  listMigrationFiles,
-} from "../migrations-dir.js";
+import { computeFileHashInDir, listMigrationFiles } from "../migrations-dir.js";
 
 /**
  * Returns status for every migration file (disk + changelog union), sorted by fileName.
@@ -15,10 +12,7 @@ import {
  * Entries in changelog but missing from disk are listed as PENDING with no file hash
  * (they are effectively orphaned but we expose them so the user sees them).
  */
-export async function status(
-  db: Db,
-  config: ResolvedConfig,
-): Promise<StatusItem[]> {
+export async function status(db: Db, config: ResolvedConfig): Promise<StatusItem[]> {
   const files = await listMigrationFiles(config);
   const applied = await getAppliedEntries(db, config);
   const appliedByName = new Map(applied.map((e) => [e.fileName, e]));

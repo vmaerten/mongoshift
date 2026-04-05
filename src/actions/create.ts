@@ -1,10 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import type { ResolvedConfig } from "../types.js";
-import {
-  ensureMigrationsDir,
-  resolveSampleMigrationPath,
-} from "../migrations-dir.js";
+import { ensureMigrationsDir, resolveSampleMigrationPath } from "../migrations-dir.js";
 import { formatDate } from "../utils/date-format.js";
 import { defaultMigrationTemplate } from "../templates/index.js";
 
@@ -23,10 +20,7 @@ function slugify(description: string): string {
     .replace(/^_+|_+$/g, "");
 }
 
-async function readTemplate(
-  config: ResolvedConfig,
-  options: CreateOptions,
-): Promise<string> {
+async function readTemplate(config: ResolvedConfig, options: CreateOptions): Promise<string> {
   if (options.template) {
     return fs.readFile(options.template, "utf8");
   }

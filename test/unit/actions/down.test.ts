@@ -26,11 +26,7 @@ function cfg(): ResolvedConfig {
   });
 }
 
-async function writeUpDown(
-  name: string,
-  upBody: string,
-  downBody: string,
-): Promise<void> {
+async function writeUpDown(name: string, upBody: string, downBody: string): Promise<void> {
   const content = `
     export const up = async (db, client, ctx) => { ${upBody} };
     export const down = async (db, client, ctx) => { ${downBody} };
@@ -49,7 +45,10 @@ afterAll(async () => {
 });
 beforeEach(async () => {
   await db.collection("changelog").deleteMany({});
-  await db.collection("widgets").drop().catch(() => {});
+  await db
+    .collection("widgets")
+    .drop()
+    .catch(() => {});
   tmp = await fs.mkdtemp(path.join(os.tmpdir(), "mm-down-"));
 });
 
@@ -70,10 +69,7 @@ describe("down action", () => {
     expect(result.migrations.map((m) => m.fileName)).toEqual(["b.mjs"]);
     const applied = await getAppliedEntries(db, cfg());
     expect(applied.map((e) => e.fileName)).toEqual(["a.mjs"]);
-    const widgets = await db
-      .collection("widgets")
-      .find()
-      .toArray();
+    const widgets = await db.collection("widgets").find().toArray();
     expect(widgets.map((w) => w.n)).toEqual([1]);
   });
 
@@ -90,10 +86,7 @@ describe("down action", () => {
     );
     await up(db, client, cfg()); // single batch
     const result = await down(db, client, cfg(), { block: true });
-    expect(result.migrations.map((m) => m.fileName).sort()).toEqual([
-      "a.mjs",
-      "b.mjs",
-    ]);
+    expect(result.migrations.map((m) => m.fileName).sort()).toEqual(["a.mjs", "b.mjs"]);
     const applied = await getAppliedEntries(db, cfg());
     expect(applied).toHaveLength(0);
   });

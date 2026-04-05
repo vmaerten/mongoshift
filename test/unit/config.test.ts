@@ -66,17 +66,14 @@ describe("loadConfig", () => {
 
   it("supports explicit file path", async () => {
     const custom = path.join(tmpDir, "custom.config.js");
-    await fs.writeFile(
-      custom,
-      `export default { mongodb: { url: "u", databaseName: "d" } };`,
-    );
+    await fs.writeFile(custom, `export default { mongodb: { url: "u", databaseName: "d" } };`);
     const cfg = await loadConfig({ cwd: tmpDir, file: custom });
     expect(cfg.mongodb.url).toBe("u");
   });
 
   it("resolveConfigPath throws if explicit path missing", async () => {
-    await expect(
-      resolveConfigPath(tmpDir, path.join(tmpDir, "nope.js")),
-    ).rejects.toBeInstanceOf(ConfigError);
+    await expect(resolveConfigPath(tmpDir, path.join(tmpDir, "nope.js"))).rejects.toBeInstanceOf(
+      ConfigError,
+    );
   });
 });

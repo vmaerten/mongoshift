@@ -4,22 +4,14 @@ import { MongoClient, type Db } from "mongodb";
 import fs from "node:fs/promises";
 import path from "node:path";
 import os from "node:os";
-import {
-  up,
-  down,
-  status,
-  create,
-  type ResolvedConfig,
-} from "../src/index.js";
+import { up, down, status, create, type ResolvedConfig } from "../src/index.js";
 
 let mongod: MongoMemoryServer;
 let client: MongoClient;
 let db: Db;
 let tmp: string;
 
-function cfg(
-  overrides: Partial<ResolvedConfig> = {},
-): ResolvedConfig {
+function cfg(overrides: Partial<ResolvedConfig> = {}): ResolvedConfig {
   return Object.freeze({
     mongodb: { url: "x", databaseName: "d" },
     migrationsDir: tmp,
@@ -32,11 +24,7 @@ function cfg(
   });
 }
 
-async function writeMig(
-  name: string,
-  upBody: string,
-  downBody: string,
-): Promise<void> {
+async function writeMig(name: string, upBody: string, downBody: string): Promise<void> {
   const content = `
     export const up = async (db, client, ctx) => {
       ctx.logger.log("running up of ${name}");
@@ -62,7 +50,10 @@ afterAll(async () => {
 beforeEach(async () => {
   await db.collection("changelog").deleteMany({});
   await db.collection("my_changelog").deleteMany({});
-  await db.collection("widgets").drop().catch(() => {});
+  await db
+    .collection("widgets")
+    .drop()
+    .catch(() => {});
   tmp = await fs.mkdtemp(path.join(os.tmpdir(), "mm-integ-"));
 });
 
@@ -89,9 +80,7 @@ describe("integration: create → up → status → down", () => {
     expect(s[0]!.status).toBe("APPLIED");
 
     // logs were persisted
-    const ch = await db
-      .collection("changelog")
-      .findOne({ fileName: "20260101-insert.mjs" });
+    const ch = await db.collection("changelog").findOne({ fileName: "20260101-insert.mjs" });
     expect(ch!.logs).toHaveLength(1);
     expect(ch!.logs[0].message).toContain("running up");
     expect(typeof ch!.durationMs).toBe("number");
@@ -134,9 +123,7 @@ describe("integration: create → up → status → down", () => {
     expect(s[0]!.status).toBe("CHANGED");
 
     await writeMig("b.mjs", ``, ``);
-    await expect(up(db, client, cfg({ useFileHash: true }))).rejects.toThrow(
-      /hash changed/,
-    );
+    await expect(up(db, client, cfg({ useFileHash: true }))).rejects.toThrow(/hash changed/);
 
     const r = await up(db, client, cfg({ useFileHash: true }), {
       forceHash: true,
@@ -156,11 +143,9 @@ describe("integration: create → up → status → down", () => {
       path.join(tmp, "sample-migration.mjs"),
       `// SAMPLE TPL\nexport const up = async () => {};\nexport const down = async () => {};\n`,
     );
-    const fileName = await create(
-      cfg({ dateFormat: "YYYY_MM_DD" }),
-      "my test",
-      { now: new Date(2026, 3, 5) },
-    );
+    const fileName = await create(cfg({ dateFormat: "YYYY_MM_DD" }), "my test", {
+      now: new Date(2026, 3, 5),
+    });
     expect(fileName).toBe("2026_04_05-my_test.mjs");
     const content = await fs.readFile(path.join(tmp, fileName), "utf8");
     expect(content).toContain("SAMPLE TPL");

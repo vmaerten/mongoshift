@@ -9,11 +9,7 @@ describe("createCaptureLogger", () => {
     logger.error("boom");
     expect(logger.entries).toHaveLength(3);
     expect(logger.entries.map((e) => e.level)).toEqual(["log", "warn", "error"]);
-    expect(logger.entries.map((e) => e.message)).toEqual([
-      "hello",
-      "careful",
-      "boom",
-    ]);
+    expect(logger.entries.map((e) => e.message)).toEqual(["hello", "careful", "boom"]);
     for (const e of logger.entries) {
       expect(e.at).toBeInstanceOf(Date);
     }

@@ -57,10 +57,7 @@ describe("changelog", () => {
     await insertEntry(db, cfg(), entry("20260101-b.js", 1));
     await insertEntry(db, cfg(), entry("20260101-a.js", 1));
     const all = await getAppliedEntries(db, cfg());
-    expect(all.map((e) => e.fileName)).toEqual([
-      "20260101-a.js",
-      "20260101-b.js",
-    ]);
+    expect(all.map((e) => e.fileName)).toEqual(["20260101-a.js", "20260101-b.js"]);
   });
 
   it("strips fileHash when useFileHash is false", async () => {
