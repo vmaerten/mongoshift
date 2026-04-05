@@ -51,27 +51,11 @@ const features = [
   },
 ];
 
-const principles = [
-  {
-    id: "P1",
-    title: "Migrations should be auditable.",
-    desc: "Every change leaves a trail: logs, hash, timestamp, duration.",
-  },
-  {
-    id: "P2",
-    title: "Dry-run should be free.",
-    desc: "Not a paid tier. Not a separate mode. Just a flag.",
-  },
-  {
-    id: "P3",
-    title: "Drift should be loud.",
-    desc: "If an applied migration's file changes, you hear about it.",
-  },
-  {
-    id: "P4",
-    title: "TypeScript should be native.",
-    desc: "No generator, no adapter. Your .ts files just run.",
-  },
+const terminalSteps = [
+  { cmd: "pnpm add mongoshift mongodb", comment: "" },
+  { cmd: "npx mongoshift init", comment: "# creates mongoshift.config.ts + migrations/" },
+  { cmd: 'npx mongoshift create "add users"', comment: "# creates 20260405-add_users.ts" },
+  { cmd: "npx mongoshift up", comment: "# applies all pending" },
 ];
 </script>
 
@@ -210,22 +194,33 @@ const principles = [
     </section>
 
     <!-- ========================================================== -->
-    <!-- Principles                                                   -->
+    <!-- Get started CTA                                              -->
     <!-- ========================================================== -->
-    <section class="principles" aria-labelledby="principles-heading">
+    <section class="get-started" aria-labelledby="gs-heading">
       <header class="section-header">
-        <span class="section-tag">// principles</span>
-        <h2 id="principles-heading" class="section-title">What we believe.</h2>
+        <span class="section-tag">// get started</span>
+        <h2 id="gs-heading" class="section-title">Four commands. Running migrations.</h2>
       </header>
-      <ol class="principle-list">
-        <li v-for="p in principles" :key="p.id" class="principle-item">
-          <span class="principle-id">{{ p.id }}</span>
-          <div class="principle-body">
-            <h3 class="principle-title">{{ p.title }}</h3>
-            <p class="principle-desc">{{ p.desc }}</p>
-          </div>
-        </li>
-      </ol>
+      <div class="terminal" aria-label="Getting started commands">
+        <div class="terminal-bar" aria-hidden="true">
+          <span class="term-dot term-dot-1"></span>
+          <span class="term-dot term-dot-2"></span>
+          <span class="term-dot term-dot-3"></span>
+          <span class="term-title">~/my-project</span>
+        </div>
+        <pre class="terminal-body"><span
+            v-for="(s, i) in terminalSteps"
+            :key="i"
+            class="term-line"
+          ><span class="term-prompt">$</span> <span class="term-cmd">{{ s.cmd }}</span><span v-if="s.comment" class="term-comment">  {{ s.comment }}</span>
+</span></pre>
+      </div>
+      <div class="gs-cta">
+        <a class="cta cta-primary" href="/guide/getting-started">
+          <span>Read the full guide</span>
+          <span class="cta-arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
     </section>
 
     <!-- ========================================================== -->
@@ -747,7 +742,7 @@ const principles = [
 }
 
 /* =====================================================================
-   Section scaffolding (features + principles share)
+   Section scaffolding (shared)
    ===================================================================== */
 
 .section-header {
@@ -903,97 +898,95 @@ const principles = [
 }
 
 /* =====================================================================
-   Principles
+   Get started CTA (terminal)
    ===================================================================== */
 
-.principles {
+.get-started {
   padding-bottom: var(--section-gap);
   border-top: 1px solid var(--vp-c-divider);
   padding-top: var(--section-gap);
 }
 
-.principle-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0;
-  border: 1px solid var(--vp-c-divider);
+.terminal {
+  border: 1px solid #1E2228;
   border-radius: 10px;
   overflow: hidden;
-  background: var(--vp-c-bg-soft);
+  background: #0A0C0F;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.08),
+    0 16px 40px -16px rgba(0, 0, 0, 0.18);
 }
-@media (min-width: 720px) {
-  .principle-list {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-.principle-item {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 16px 18px;
-  padding: 22px 24px 26px;
-  background: var(--vp-c-bg);
-  border-right: 1px solid var(--vp-c-divider);
-  border-bottom: 1px solid var(--vp-c-divider);
-}
-@media (min-width: 720px) {
-  .principle-item:nth-child(2n) {
-    border-right: none;
-  }
-  .principle-item:nth-child(n + 3) {
-    border-bottom: none;
-  }
-}
-@media (max-width: 719px) {
-  .principle-item {
-    border-right: none;
-  }
-  .principle-item:last-child {
-    border-bottom: none;
-  }
+.dark .terminal {
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.4),
+    0 16px 40px -16px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(139, 92, 246, 0.08);
 }
 
-.principle-id {
-  grid-column: 1;
-  grid-row: 1 / span 2;
+.terminal-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: #13171C;
+  border-bottom: 1px solid #1E2228;
+}
+.term-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  border: 0.5px solid rgba(0, 0, 0, 0.3);
+}
+.term-dot-1 { background: #E84E3D; }
+.term-dot-2 { background: #F5BE40; }
+.term-dot-3 { background: #5ECC58; }
+.term-title {
+  margin-left: auto;
+  margin-right: auto;
+  padding-right: 36px;
   font-family: var(--vp-font-family-mono);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  color: var(--ms-violet-500);
-  padding-top: 3px;
-}
-.dark .principle-id {
-  color: var(--ms-violet-400);
+  font-size: 11.5px;
+  font-weight: 500;
+  color: #9CA3AF;
+  letter-spacing: 0.01em;
 }
 
-.principle-body {
-  grid-column: 2;
-  display: contents;
-}
-
-.principle-title {
-  grid-column: 2;
-  grid-row: 1;
+.terminal-body {
   margin: 0;
-  font-family: var(--vp-font-family-base);
-  font-size: 16.5px;
+  padding: 18px 18px 20px;
+  font-family: var(--vp-font-family-mono);
+  font-size: 13.5px;
+  line-height: 1.9;
+  color: #D4D4D4;
+  overflow-x: auto;
+  white-space: pre;
+}
+.term-line {
+  display: block;
+}
+.term-prompt {
+  color: var(--ms-violet-400);
   font-weight: 600;
-  letter-spacing: -0.005em;
-  line-height: 1.35;
-  color: var(--vp-c-text-1);
+  user-select: none;
+  margin-right: 0.5em;
+}
+.term-cmd {
+  color: #E5E7EB;
+  font-weight: 500;
+}
+.term-comment {
+  color: #6B7280;
+  font-weight: 400;
 }
 
-.principle-desc {
-  grid-column: 2;
-  grid-row: 2;
-  margin: 6px 0 0;
-  font-size: 14px;
-  line-height: 1.55;
-  color: var(--vp-c-text-2);
+.gs-cta {
+  margin-top: 28px;
+  display: flex;
+  justify-content: center;
+}
+.gs-cta .cta {
+  padding: 12px 22px;
+  font-size: 14.5px;
 }
 
 /* =====================================================================
