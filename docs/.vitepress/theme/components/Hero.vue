@@ -113,13 +113,6 @@ const terminalSteps = [
             </a>
           </div>
 
-          <!-- Install row: three package managers, monospace, tight -->
-          <div class="install-row" aria-label="Install">
-            <div class="install-grid">
-              <span class="pm-tag">pnpm</span>
-              <code>pnpm add mongoshift mongodb</code>
-            </div>
-          </div>
         </div>
 
         <!-- ==================================================== -->
@@ -165,6 +158,22 @@ const terminalSteps = [
           </div>
         </div>
       </div>
+
+      <!-- Full-width terminal: four commands to ship -->
+      <div class="hero-terminal" aria-label="Getting started commands">
+        <div class="terminal-bar" aria-hidden="true">
+          <span class="term-dot term-dot-1"></span>
+          <span class="term-dot term-dot-2"></span>
+          <span class="term-dot term-dot-3"></span>
+          <span class="term-title">~/my-project</span>
+        </div>
+        <pre class="terminal-body"><span
+            v-for="(s, i) in terminalSteps"
+            :key="i"
+            class="term-line"
+          ><span class="term-prompt">$</span> <span class="term-cmd">{{ s.cmd }}</span><span v-if="s.comment" class="term-comment">  {{ s.comment }}</span>
+</span></pre>
+      </div>
     </section>
 
     <!-- ========================================================== -->
@@ -190,36 +199,6 @@ const terminalSteps = [
           <p class="feature-desc">{{ f.desc }}</p>
           <div class="feature-underline" aria-hidden="true"></div>
         </article>
-      </div>
-    </section>
-
-    <!-- ========================================================== -->
-    <!-- Get started CTA                                              -->
-    <!-- ========================================================== -->
-    <section class="get-started" aria-labelledby="gs-heading">
-      <header class="section-header">
-        <span class="section-tag">// get started</span>
-        <h2 id="gs-heading" class="section-title">Four commands. Running migrations.</h2>
-      </header>
-      <div class="terminal" aria-label="Getting started commands">
-        <div class="terminal-bar" aria-hidden="true">
-          <span class="term-dot term-dot-1"></span>
-          <span class="term-dot term-dot-2"></span>
-          <span class="term-dot term-dot-3"></span>
-          <span class="term-title">~/my-project</span>
-        </div>
-        <pre class="terminal-body"><span
-            v-for="(s, i) in terminalSteps"
-            :key="i"
-            class="term-line"
-          ><span class="term-prompt">$</span> <span class="term-cmd">{{ s.cmd }}</span><span v-if="s.comment" class="term-comment">  {{ s.comment }}</span>
-</span></pre>
-      </div>
-      <div class="gs-cta">
-        <a class="cta cta-primary" href="/guide/getting-started">
-          <span>Read the full guide</span>
-          <span class="cta-arrow" aria-hidden="true">→</span>
-        </a>
       </div>
     </section>
 
@@ -504,43 +483,34 @@ const terminalSteps = [
   background: var(--vp-c-bg-soft);
 }
 
-/* -------- Install row ---------------------------------------------- */
+/* -------- Hero terminal (full-width under the hero grid) ----------- */
 
-.install-row {
-  margin-top: 36px;
-  max-width: 46ch;
-}
-.install-grid {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  align-items: center;
-  gap: 0;
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 8px;
-  background: var(--vp-c-bg-soft);
+.hero-terminal {
+  position: relative;
+  z-index: 1;
+  margin-top: 56px;
+  border: 1px solid #1E2228;
+  border-radius: 10px;
   overflow: hidden;
+  background: #0A0C0F;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.08),
+    0 16px 40px -16px rgba(0, 0, 0, 0.18);
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 0.7s ease 0.3s,
+    transform 0.7s ease 0.3s;
 }
-.pm-tag {
-  font-family: var(--vp-font-family-mono);
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--vp-c-text-2);
-  padding: 12px 14px;
-  background: var(--vp-c-bg-alt);
-  border-right: 1px solid var(--vp-c-divider);
+.is-mounted .hero-terminal {
+  opacity: 1;
+  transform: translateY(0);
 }
-.install-grid code {
-  font-family: var(--vp-font-family-mono);
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--vp-c-text-1);
-  padding: 12px 16px;
-  background: transparent;
-  border: none;
-  white-space: nowrap;
-  overflow-x: auto;
+.dark .hero-terminal {
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.4),
+    0 16px 40px -16px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(139, 92, 246, 0.08);
 }
 
 /* =====================================================================
@@ -898,30 +868,8 @@ const terminalSteps = [
 }
 
 /* =====================================================================
-   Get started CTA (terminal)
+   Terminal internals (shared by .hero-terminal)
    ===================================================================== */
-
-.get-started {
-  padding-bottom: var(--section-gap);
-  border-top: 1px solid var(--vp-c-divider);
-  padding-top: var(--section-gap);
-}
-
-.terminal {
-  border: 1px solid #1E2228;
-  border-radius: 10px;
-  overflow: hidden;
-  background: #0A0C0F;
-  box-shadow:
-    0 1px 2px rgba(0, 0, 0, 0.08),
-    0 16px 40px -16px rgba(0, 0, 0, 0.18);
-}
-.dark .terminal {
-  box-shadow:
-    0 1px 2px rgba(0, 0, 0, 0.4),
-    0 16px 40px -16px rgba(0, 0, 0, 0.5),
-    0 0 0 1px rgba(139, 92, 246, 0.08);
-}
 
 .terminal-bar {
   display: flex;
@@ -977,16 +925,6 @@ const terminalSteps = [
 .term-comment {
   color: #6B7280;
   font-weight: 400;
-}
-
-.gs-cta {
-  margin-top: 28px;
-  display: flex;
-  justify-content: center;
-}
-.gs-cta .cta {
-  padding: 12px 22px;
-  font-size: 14.5px;
 }
 
 /* =====================================================================
