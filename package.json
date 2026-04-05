@@ -2,12 +2,31 @@
   "name": "mongoshift",
   "version": "0.1.0",
   "description": "MongoDB migration tool with dry-run, file-hash detection, and stored logs",
+  "keywords": [
+    "cli",
+    "esm",
+    "migration",
+    "migrations",
+    "mongodb",
+    "typescript"
+  ],
+  "homepage": "https://github.com/vmaerten/mongoshift#readme",
+  "bugs": {
+    "url": "https://github.com/vmaerten/mongoshift/issues"
+  },
+  "license": "MIT",
+  "author": "Valentin Maerten <maerten.valentin@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vmaerten/mongoshift.git"
+  },
   "bin": {
     "mongoshift": "dist/cli.js"
   },
   "files": [
     "dist",
-    "README.md"
+    "README.md",
+    "LICENSE"
   ],
   "type": "module",
   "main": "dist/index.js",
