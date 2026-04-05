@@ -20,7 +20,6 @@ function makeConfig(dir: string, ext: ".ts" | ".js" = ".js"): ResolvedConfig {
     dateFormat: "YYYYMMDDHHmmss",
     changelogCollectionName: "changelog",
     useFileHash: false,
-    moduleSystem: "esm",
   });
 }
 

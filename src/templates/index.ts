@@ -50,7 +50,6 @@ const config: Config = {
   dateFormat: "YYYYMMDDHHmmss",
   changelogCollectionName: "changelog",
   useFileHash: false,
-  moduleSystem: "esm",
 };
 
 export default config;
@@ -67,7 +66,6 @@ const config = {
   dateFormat: "YYYYMMDDHHmmss",
   changelogCollectionName: "changelog",
   useFileHash: false,
-  moduleSystem: "esm",
 };
 
 export default config;

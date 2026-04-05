@@ -15,7 +15,6 @@ const DEFAULTS: Omit<Config, "mongodb"> = {
   dateFormat: "YYYYMMDDHHmmss",
   changelogCollectionName: "changelog",
   useFileHash: false,
-  moduleSystem: "esm",
 };
 
 export class ConfigError extends Error {}
@@ -70,7 +69,6 @@ function validate(raw: unknown, source: string): Config {
     dateFormat: obj.dateFormat ?? DEFAULTS.dateFormat,
     changelogCollectionName: obj.changelogCollectionName ?? DEFAULTS.changelogCollectionName,
     useFileHash: obj.useFileHash ?? DEFAULTS.useFileHash,
-    moduleSystem: "esm",
   };
   return merged;
 }

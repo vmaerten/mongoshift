@@ -79,7 +79,6 @@ const config: Config = {
   dateFormat: "YYYYMMDDHHmmss",         // dayjs tokens (wrap literals in [brackets])
   changelogCollectionName: "changelog",
   useFileHash: false,
-  moduleSystem: "esm",
 };
 export default config;
 ```

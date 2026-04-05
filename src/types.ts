@@ -13,7 +13,6 @@ export interface Config {
   dateFormat: string;
   changelogCollectionName: string;
   useFileHash: boolean;
-  moduleSystem: "esm";
 }
 
 export type ResolvedConfig = Readonly<Config>;

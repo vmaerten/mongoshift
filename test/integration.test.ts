@@ -19,7 +19,6 @@ function cfg(overrides: Partial<ResolvedConfig> = {}): ResolvedConfig {
     dateFormat: "YYYYMMDDHHmmss",
     changelogCollectionName: "changelog",
     useFileHash: false,
-    moduleSystem: "esm",
     ...overrides,
   });
 }

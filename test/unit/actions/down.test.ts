@@ -22,7 +22,6 @@ function cfg(): ResolvedConfig {
     dateFormat: "YYYYMMDDHHmmss",
     changelogCollectionName: "changelog",
     useFileHash: false,
-    moduleSystem: "esm",
   });
 }
 
