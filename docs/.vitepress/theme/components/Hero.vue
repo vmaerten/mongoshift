@@ -51,12 +51,14 @@ const features = [
   },
 ];
 
-const terminalSteps = [
-  { cmd: "pnpm add mongoshift mongodb", comment: "" },
-  { cmd: "pnpm mongoshift init", comment: "# creates mongoshift.config.ts + migrations/" },
-  { cmd: 'pnpm mongoshift create "add users"', comment: "# creates 20260405-add_users.ts" },
-  { cmd: "pnpm mongoshift up", comment: "# applies all pending" },
-];
+const installCmd = "pnpm add mongoshift mongodb";
+const copied = ref(false);
+function copyInstall() {
+  navigator.clipboard?.writeText(installCmd).then(() => {
+    copied.value = true;
+    setTimeout(() => (copied.value = false), 1400);
+  });
+}
 </script>
 
 <template>
@@ -159,20 +161,23 @@ const terminalSteps = [
         </div>
       </div>
 
-      <!-- Full-width terminal: four commands to ship -->
-      <div class="hero-terminal" aria-label="Getting started commands">
-        <div class="terminal-bar" aria-hidden="true">
-          <span class="term-dot term-dot-1"></span>
-          <span class="term-dot term-dot-2"></span>
-          <span class="term-dot term-dot-3"></span>
-          <span class="term-title">~/my-project</span>
+      <!-- Install one-liner + push to guide -->
+      <div class="hero-install">
+        <div class="install-line" aria-label="Install command">
+          <span class="install-prompt" aria-hidden="true">$</span>
+          <code class="install-cmd">{{ installCmd }}</code>
+          <button
+            class="install-copy"
+            type="button"
+            aria-label="Copy install command"
+            @click="copyInstall"
+          >
+            {{ copied ? "copied" : "copy" }}
+          </button>
         </div>
-        <pre class="terminal-body"><span
-            v-for="(s, i) in terminalSteps"
-            :key="i"
-            class="term-line"
-          ><span class="term-prompt">$</span> <span class="term-cmd">{{ s.cmd }}</span><span v-if="s.comment" class="term-comment">  {{ s.comment }}</span>
-</span></pre>
+        <a class="install-link" href="/guide/getting-started">
+          Read the guide <span class="install-arrow" aria-hidden="true">→</span>
+        </a>
       </div>
     </section>
 
@@ -483,34 +488,100 @@ const terminalSteps = [
   background: var(--vp-c-bg-soft);
 }
 
-/* -------- Hero terminal (full-width under the hero grid) ----------- */
+/* -------- Hero install row + read-the-guide link ------------------- */
 
-.hero-terminal {
+.hero-install {
   position: relative;
   z-index: 1;
-  margin-top: 56px;
-  border: 1px solid #1E2228;
-  border-radius: 10px;
-  overflow: hidden;
-  background: #0A0C0F;
-  box-shadow:
-    0 1px 2px rgba(0, 0, 0, 0.08),
-    0 16px 40px -16px rgba(0, 0, 0, 0.18);
+  margin-top: 48px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px;
   opacity: 0;
   transform: translateY(8px);
   transition:
     opacity 0.7s ease 0.3s,
     transform 0.7s ease 0.3s;
 }
-.is-mounted .hero-terminal {
+.is-mounted .hero-install {
   opacity: 1;
   transform: translateY(0);
 }
-.dark .hero-terminal {
-  box-shadow:
-    0 1px 2px rgba(0, 0, 0, 0.4),
-    0 16px 40px -16px rgba(0, 0, 0, 0.5),
-    0 0 0 1px rgba(139, 92, 246, 0.08);
+.install-line {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 8px;
+  background: var(--vp-c-bg-soft);
+  font-family: var(--vp-font-family-mono);
+  max-width: 100%;
+  overflow: hidden;
+}
+.install-prompt {
+  color: var(--ms-violet-500);
+  font-weight: 700;
+  user-select: none;
+}
+.dark .install-prompt {
+  color: var(--ms-violet-400);
+}
+.install-cmd {
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--vp-c-text-1);
+  background: transparent;
+  border: none;
+  padding: 0;
+  white-space: nowrap;
+  overflow-x: auto;
+}
+.install-copy {
+  font-family: var(--vp-font-family-mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--vp-c-text-3);
+  background: var(--vp-c-bg);
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 4px;
+  padding: 4px 8px;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease;
+  margin-left: 4px;
+}
+.install-copy:hover {
+  color: var(--ms-violet-500);
+  border-color: var(--ms-violet-500);
+}
+.dark .install-copy:hover {
+  color: var(--ms-violet-400);
+  border-color: var(--ms-violet-400);
+}
+.install-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--vp-font-family-base);
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--ms-violet-500);
+  text-decoration: none !important;
+  letter-spacing: -0.005em;
+}
+.dark .install-link {
+  color: var(--ms-violet-400);
+}
+.install-arrow {
+  display: inline-block;
+  font-family: var(--vp-font-family-mono);
+  transition: transform 0.15s ease;
+}
+.install-link:hover .install-arrow {
+  transform: translateX(3px);
 }
 
 /* =====================================================================
@@ -865,66 +936,6 @@ const terminalSteps = [
 }
 .dark .feature-underline {
   background: var(--ms-violet-400);
-}
-
-/* =====================================================================
-   Terminal internals (shared by .hero-terminal)
-   ===================================================================== */
-
-.terminal-bar {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 14px;
-  background: #13171C;
-  border-bottom: 1px solid #1E2228;
-}
-.term-dot {
-  width: 11px;
-  height: 11px;
-  border-radius: 50%;
-  border: 0.5px solid rgba(0, 0, 0, 0.3);
-}
-.term-dot-1 { background: #E84E3D; }
-.term-dot-2 { background: #F5BE40; }
-.term-dot-3 { background: #5ECC58; }
-.term-title {
-  margin-left: auto;
-  margin-right: auto;
-  padding-right: 36px;
-  font-family: var(--vp-font-family-mono);
-  font-size: 11.5px;
-  font-weight: 500;
-  color: #9CA3AF;
-  letter-spacing: 0.01em;
-}
-
-.terminal-body {
-  margin: 0;
-  padding: 18px 18px 20px;
-  font-family: var(--vp-font-family-mono);
-  font-size: 13.5px;
-  line-height: 1.9;
-  color: #D4D4D4;
-  overflow-x: auto;
-  white-space: pre;
-}
-.term-line {
-  display: block;
-}
-.term-prompt {
-  color: var(--ms-violet-400);
-  font-weight: 600;
-  user-select: none;
-  margin-right: 0.5em;
-}
-.term-cmd {
-  color: #E5E7EB;
-  font-weight: 500;
-}
-.term-comment {
-  color: #6B7280;
-  font-weight: 400;
 }
 
 /* =====================================================================
