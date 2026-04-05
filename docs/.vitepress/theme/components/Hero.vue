@@ -13,42 +13,12 @@ onMounted(() => {
 });
 
 const features = [
-  {
-    id: "M01",
-    title: "Dry-run mode",
-    desc: "Preview migrations without touching your changelog.",
-    glyph: "◐",
-  },
-  {
-    id: "M02",
-    title: "Stored logs",
-    desc: "Every migration's output lives in its changelog entry.",
-    glyph: "▤",
-  },
-  {
-    id: "M03",
-    title: "File-hash drift",
-    desc: "Detect edited migrations before they cause chaos.",
-    glyph: "◈",
-  },
-  {
-    id: "M04",
-    title: "Custom templates",
-    desc: "Enforce team conventions with your own template files.",
-    glyph: "⬚",
-  },
-  {
-    id: "M05",
-    title: "TypeScript-native",
-    desc: "Written in TS, ships .d.ts, runs .ts migrations.",
-    glyph: "⌘",
-  },
-  {
-    id: "M06",
-    title: "ESM-only",
-    desc: "Modern Node 24+ with native ECMAScript modules.",
-    glyph: "▷",
-  },
+  { id: "M01", title: "Dry-run mode", desc: "Preview migrations without touching your changelog." },
+  { id: "M02", title: "Stored logs", desc: "Every migration's output lives in its changelog entry." },
+  { id: "M03", title: "File-hash drift", desc: "Detect edited migrations before they cause chaos." },
+  { id: "M04", title: "Custom templates", desc: "Enforce team conventions with your own template files." },
+  { id: "M05", title: "TypeScript-native", desc: "Written in TS, ships .d.ts, runs .ts migrations." },
+  { id: "M06", title: "ESM-only", desc: "Modern Node 24+ with native ECMAScript modules." },
 ];
 
 const installCmd = "pnpm add mongoshift mongodb";
@@ -67,17 +37,6 @@ function copyInstall() {
     <!-- Hero                                                         -->
     <!-- ========================================================== -->
     <section class="hero" aria-labelledby="hero-headline">
-      <!-- Migration block indicator: a fake "block" marker, like a commit -->
-      <div class="block-indicator" aria-hidden="true">
-        <span class="block-dot"></span>
-        <span class="block-label">block</span>
-        <span class="block-ts">20260405_0907</span>
-        <span class="block-sep">·</span>
-        <span class="block-ver">v0.1.0</span>
-        <span class="block-sep">·</span>
-        <span class="block-status">ready</span>
-      </div>
-
       <div class="hero-grid">
         <div class="hero-copy">
           <p class="eyebrow"><span class="eyebrow-mark">→</span> MongoDB migrations</p>
@@ -132,8 +91,7 @@ function copyInstall() {
               20260405090703-add_users.ts
             </div>
             <div class="code-status">
-              <span class="status-led"></span>
-              <span>live</span>
+              <span>saved</span>
             </div>
           </div>
           <div class="code-body">
@@ -175,9 +133,6 @@ function copyInstall() {
             {{ copied ? "copied" : "copy" }}
           </button>
         </div>
-        <a class="install-link" href="/guide/getting-started">
-          Read the guide <span class="install-arrow" aria-hidden="true">→</span>
-        </a>
       </div>
     </section>
 
@@ -187,7 +142,7 @@ function copyInstall() {
     <section class="features" aria-labelledby="features-heading">
       <header class="section-header">
         <span class="section-tag">// features</span>
-        <h2 id="features-heading" class="section-title">Six deliberate decisions.</h2>
+        <h2 id="features-heading" class="section-title">What it does.</h2>
       </header>
       <div class="feature-grid">
         <article
@@ -198,7 +153,6 @@ function copyInstall() {
         >
           <div class="feature-top">
             <span class="feature-id">{{ f.id }}</span>
-            <span class="feature-glyph" aria-hidden="true">{{ f.glyph }}</span>
           </div>
           <h3 class="feature-title">{{ f.title }}</h3>
           <p class="feature-desc">{{ f.desc }}</p>
@@ -248,66 +202,6 @@ function copyInstall() {
   padding: 0 var(--page-pad) 96px;
   color: var(--vp-c-text-1);
   font-feature-settings: "ss01", "cv11";
-}
-
-/* =====================================================================
-   Block indicator (migration-themed "ribbon" above the hero)
-   ===================================================================== */
-
-.block-indicator {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  font-family: var(--vp-font-family-mono);
-  font-size: 11.5px;
-  font-weight: 500;
-  letter-spacing: 0.04em;
-  color: var(--vp-c-text-3);
-  padding: 6px 14px 6px 12px;
-  margin-top: 40px;
-  background: var(--vp-c-bg-soft);
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 999px;
-  opacity: 0;
-  transform: translateY(-4px);
-  transition:
-    opacity 0.6s ease 0.05s,
-    transform 0.6s ease 0.05s;
-}
-.is-mounted .block-indicator {
-  opacity: 1;
-  transform: translateY(0);
-}
-.block-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--ms-violet-500);
-  box-shadow: 0 0 0 3px var(--ms-signal-weak);
-  animation: pulse 2.4s ease-in-out infinite;
-}
-@keyframes pulse {
-  50% {
-    box-shadow: 0 0 0 6px transparent;
-  }
-}
-.block-label {
-  color: var(--vp-c-text-2);
-}
-.block-ts,
-.block-ver {
-  color: var(--vp-c-text-1);
-  font-weight: 600;
-}
-.block-sep {
-  opacity: 0.4;
-}
-.block-status {
-  color: var(--ms-added);
-  font-weight: 600;
-  text-transform: uppercase;
-  font-size: 10.5px;
-  letter-spacing: 0.08em;
 }
 
 /* =====================================================================
@@ -561,29 +455,6 @@ function copyInstall() {
   color: var(--ms-violet-400);
   border-color: var(--ms-violet-400);
 }
-.install-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-family: var(--vp-font-family-base);
-  font-size: 14.5px;
-  font-weight: 600;
-  color: var(--ms-violet-500);
-  text-decoration: none !important;
-  letter-spacing: -0.005em;
-}
-.dark .install-link {
-  color: var(--ms-violet-400);
-}
-.install-arrow {
-  display: inline-block;
-  font-family: var(--vp-font-family-mono);
-  transition: transform 0.15s ease;
-}
-.install-link:hover .install-arrow {
-  transform: translateX(3px);
-}
-
 /* =====================================================================
    Code window (hero right side)
    ===================================================================== */
@@ -695,15 +566,6 @@ function copyInstall() {
   letter-spacing: 0.1em;
   color: #6b7280;
 }
-.status-led {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #5ecc58;
-  box-shadow: 0 0 8px rgba(94, 204, 88, 0.6);
-  animation: pulse 2s ease-in-out infinite;
-}
-
 .code-body {
   padding: 16px 0 18px;
   overflow-x: auto;
@@ -901,14 +763,6 @@ function copyInstall() {
   color: var(--vp-c-text-3);
   letter-spacing: 0.06em;
 }
-.feature-glyph {
-  font-size: 18px;
-  color: var(--ms-violet-500);
-  line-height: 1;
-}
-.dark .feature-glyph {
-  color: var(--ms-violet-400);
-}
 .feature-title {
   font-family: var(--vp-font-family-base);
   font-size: 17px;
@@ -1005,9 +859,9 @@ function copyInstall() {
     animation: none !important;
     transition: none !important;
   }
-  .home-root .block-indicator,
   .home-root .hero-copy,
   .home-root .code-window,
+  .home-root .hero-install,
   .home-root .feature-card {
     opacity: 1 !important;
     transform: none !important;
