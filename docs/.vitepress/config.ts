@@ -30,6 +30,13 @@ export default defineConfig({
       { text: "Guide", link: "/guide/getting-started", activeMatch: "/guide/" },
       { text: "Reference", link: "/reference/config", activeMatch: "/reference/" },
       {
+        text: "Community",
+        items: [
+          { text: "Team", link: "/team" },
+          { text: "Sponsors", link: "/sponsors" },
+        ],
+      },
+      {
         text: "v0.1.0",
         items: [
           {
