@@ -28,7 +28,6 @@
     "README.md",
     "LICENSE"
   ],
-  "packageManager": "pnpm@10.33.0",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -70,5 +69,6 @@
   },
   "engines": {
     "node": ">=24.0.0"
-  }
+  },
+  "packageManager": "pnpm@10.33.0"
 }

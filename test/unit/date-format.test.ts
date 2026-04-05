@@ -24,5 +24,4 @@ describe("formatDate", () => {
   it("supports bracket escaping for literals", () => {
     expect(formatDate(d, "YYYY-[build]-SSS")).toBe("2026-build-042");
   });
-
 });

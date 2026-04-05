@@ -76,7 +76,7 @@ const config: Config = {
   mongodb: { url: "mongodb://localhost:27017", databaseName: "my_db" },
   migrationsDir: "migrations",
   migrationFileExtension: ".ts",
-  dateFormat: "YYYYMMDDHHmmss",         // dayjs tokens (wrap literals in [brackets])
+  dateFormat: "YYYYMMDDHHmmss", // dayjs tokens (wrap literals in [brackets])
   changelogCollectionName: "changelog",
   useFileHash: false,
 };
@@ -91,13 +91,13 @@ export default config;
 
 ### 1. Config file
 
-| migrate-mongo                 | mongoshift                   |
-| ----------------------------- | --------------------------------- |
-| `migrate-mongo-config.js`     | `mongoshift.config.ts` (or `.js`) |
-| CommonJS by default           | ESM only                          |
-| `moduleSystem: "commonjs"`    | removed (ESM only)                |
-| `lockCollectionName`, `lockTtl` | removed (for now)               |
-| no `dateFormat`               | `dateFormat: "YYYYMMDDHHmmss"` (configurable) |
+| migrate-mongo                   | mongoshift                                    |
+| ------------------------------- | --------------------------------------------- |
+| `migrate-mongo-config.js`       | `mongoshift.config.ts` (or `.js`)             |
+| CommonJS by default             | ESM only                                      |
+| `moduleSystem: "commonjs"`      | removed (ESM only)                            |
+| `lockCollectionName`, `lockTtl` | removed (for now)                             |
+| no `dateFormat`                 | `dateFormat: "YYYYMMDDHHmmss"` (configurable) |
 
 Everything else maps 1:1: `mongodb`, `migrationsDir`, `migrationFileExtension`,
 `changelogCollectionName`, `useFileHash`.
@@ -107,15 +107,17 @@ Everything else maps 1:1: `mongodb`, `migrationsDir`, `migrationFileExtension`,
 migrate-mongo:
 
 ```js
-export const up = async (db, client) => { /* ... */ };
+export const up = async (db, client) => {
+  /* ... */
+};
 ```
 
 mongoshift adds a **third `ctx` argument**:
 
 ```ts
 export const up = async (db, client, ctx) => {
-  ctx.logger.log("...");    // persisted in changelog
-  if (ctx.dryRun) return;   // respect dry-run
+  ctx.logger.log("..."); // persisted in changelog
+  if (ctx.dryRun) return; // respect dry-run
 };
 ```
 
@@ -125,13 +127,13 @@ you want to use those features.
 
 ### 3. CLI command mapping
 
-| migrate-mongo         | mongoshift                 |
-| --------------------- | ------------------------------- |
-| `migrate-mongo init`  | `mongoshift init`          |
-| `migrate-mongo create <name>` | `mongoshift create <name> [-t template]` |
-| `migrate-mongo up`    | `mongoshift up [--dry-run] [--force-hash]` |
-| `migrate-mongo down`  | `mongoshift down [--dry-run] [--block]` |
-| `migrate-mongo status` | `mongoshift status`       |
+| migrate-mongo                 | mongoshift                                 |
+| ----------------------------- | ------------------------------------------ |
+| `migrate-mongo init`          | `mongoshift init`                          |
+| `migrate-mongo create <name>` | `mongoshift create <name> [-t template]`   |
+| `migrate-mongo up`            | `mongoshift up [--dry-run] [--force-hash]` |
+| `migrate-mongo down`          | `mongoshift down [--dry-run] [--block]`    |
+| `migrate-mongo status`        | `mongoshift status`                        |
 
 ### 4. Keeping existing changelog entries
 
@@ -144,10 +146,9 @@ If you want to **backfill** the new fields on old entries for consistency,
 run once:
 
 ```ts
-await db.collection("changelog").updateMany(
-  { logs: { $exists: false } },
-  { $set: { logs: [], durationMs: 0 } },
-);
+await db
+  .collection("changelog")
+  .updateMany({ logs: { $exists: false } }, { $set: { logs: [], durationMs: 0 } });
 ```
 
 ### 5. Dropped features (for now)
