@@ -22,10 +22,13 @@ separate TypeScript runtime.
 Install alongside the official `mongodb` driver, which is a peer dependency:
 
 ```bash
-npm  install mongoshift mongodb
-pnpm add     mongoshift mongodb
-yarn add     mongoshift mongodb
-bun  add     mongoshift mongodb
+npm install mongoshift mongodb
+# or
+pnpm add mongoshift mongodb
+# or
+yarn add mongoshift mongodb
+# or
+bun add mongoshift mongodb
 ```
 
 ## Scaffold a project
@@ -120,11 +123,13 @@ import type { Db, MongoClient } from "mongodb";
 import type { MigrationContext } from "mongoshift";
 
 export const up = async (db: Db, client: MongoClient, ctx: MigrationContext) => {
-  ctx.logger.log("creating users collection");
+  ctx.logger.log("creating users");
+  if (ctx.dryRun) return;
   await db.createCollection("users");
 };
 
 export const down = async (db: Db, client: MongoClient, ctx: MigrationContext) => {
+  if (ctx.dryRun) return;
   await db.collection("users").drop();
 };
 ```

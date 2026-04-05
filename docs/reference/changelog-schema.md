@@ -111,3 +111,9 @@ fields are identical and carry identical semantics. mongoshift adds
 populated by migrate-mongo is safe - the extra fields default sensibly when
 missing - but the reverse is not: migrate-mongo will ignore the extras and
 will not be able to drive `down --block` or the hash-drift check.
+
+## Related guides
+
+- [Stored logs](../guide/stored-logs.md) - how `logs` and `durationMs` are used
+- [File-hash drift](../guide/file-hash.md) - enabling and reading `fileHash`
+- [From migrate-mongo](../guide/from-migrate-mongo.md) - migrating the collection

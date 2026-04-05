@@ -65,7 +65,7 @@ export default defineConfig({
           ],
         },
         {
-          text: "Migrating",
+          text: "Upgrading",
           items: [{ text: "From migrate-mongo", link: "/guide/from-migrate-mongo" }],
         },
       ],

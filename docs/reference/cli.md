@@ -176,3 +176,9 @@ Output columns: `File`, `Status` (`PENDING`, `APPLIED`, `CHANGED`), and
 | ---- | ----------------------------------------------------------------------- |
 | `0`  | Command completed successfully.                                         |
 | `1`  | Any thrown error (config error, hash drift, migration failure, I/O, …). |
+
+## Related guides
+
+- [Quick start](../guide/quick-start.md) - CLI walkthrough
+- [Dry-run mode](../guide/dry-run.md) - `--dry-run` semantics
+- [File-hash drift](../guide/file-hash.md) - `--force-hash` and drift detection

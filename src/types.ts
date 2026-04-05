@@ -71,7 +71,8 @@ export interface RunOptions {
   forceHash?: boolean;
 }
 
-export interface DownOptions extends RunOptions {
+export interface DownOptions {
+  dryRun?: boolean;
   block?: boolean;
 }
 

@@ -104,8 +104,10 @@ Existing changelog entries don't have a `fileHash` field yet. mongoshift
 treats entries with no stored hash as **not-drifted** - so flipping
 `useFileHash` to `true` on an existing project is safe.
 
-As migrations run subsequently, their entries gain a `fileHash`. To backfill
-hashes for already-applied migrations, run a one-off script:
+New migrations applied after you enable `useFileHash` will be stored with
+their hash. **Existing entries are never updated retroactively** - their
+`fileHash` field stays missing unless you backfill it yourself. Run this
+one-off script to backfill:
 
 ```ts
 import crypto from "node:crypto";

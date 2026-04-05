@@ -65,7 +65,7 @@ top-level fields fall back to defaults.
 - **Type:** `string`
 - **Default:** `"YYYYMMDDHHmmss"`
 - **Description:** Token format used to prefix generated migration file names.
-  Supported tokens: `YYYY`, `MM`, `DD`, `HH`, `mm`, `ss`.
+  Supported tokens: `YYYY`, `MM`, `DD`, `HH`, `mm`, `ss`, `SSS`.
 
 ### `changelogCollectionName`
 
@@ -108,10 +108,9 @@ The file is imported via `import(pathToFileURL(...))`. The default export is
 used if present, otherwise the module namespace object itself.
 
 ::: tip
-Running a TypeScript config file requires a TypeScript-capable loader (Node
-
-> = 22.6 with `--experimental-strip-types`, Node >= 23, `tsx`, or similar).
-> :::
+mongoshift requires **Node 24+**, which strips TypeScript types natively.
+Your `mongoshift.config.ts` runs without any extra loader.
+:::
 
 ## Example config
 
@@ -146,3 +145,9 @@ Thrown by `resolveConfigPath()` and `loadConfig()` when:
 - no default config file can be found in `cwd`;
 - the resolved module does not export an object;
 - `mongodb.url` or `mongodb.databaseName` are missing or not strings.
+
+## Related guides
+
+- [Getting started](../guide/getting-started.md) - create your first config
+- [File-hash drift](../guide/file-hash.md) - when to enable `useFileHash`
+- [Custom templates](../guide/templates.md) - `dateFormat` and template resolution

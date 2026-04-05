@@ -97,12 +97,22 @@ Without `--block`, `down` rolls back **only the most recent migration**.
   completes). The thrown error is augmented with a `migrated` array listing
   what did run.
 
+When calling `up()` programmatically, failed runs carry a `migrated` array on
+the thrown error listing which files succeeded before the crash:
+
 ```ts
+import { loadConfig, connect, up } from "mongoshift";
+
+const cfg = await loadConfig();
+const { db, client, close } = await connect(cfg);
 try {
-  await up(db, client, config);
+  await up(db, client, cfg);
 } catch (err) {
-  // err.migrated: MigrationRunReport[]
+  // err.migrated: MigrationRunReport[] - files that ran before the failure
+  console.error(`Failed after ${(err as any).migrated?.length ?? 0} migration(s)`);
   throw err;
+} finally {
+  await close();
 }
 ```
 

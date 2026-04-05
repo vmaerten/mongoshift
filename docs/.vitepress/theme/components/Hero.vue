@@ -14,10 +14,26 @@ onMounted(() => {
 
 const features = [
   { id: "M01", title: "Dry-run mode", desc: "Preview migrations without touching your changelog." },
-  { id: "M02", title: "Stored logs", desc: "Every migration's output lives in its changelog entry." },
-  { id: "M03", title: "File-hash drift", desc: "Detect edited migrations before they cause chaos." },
-  { id: "M04", title: "Custom templates", desc: "Enforce team conventions with your own template files." },
-  { id: "M05", title: "TypeScript-native", desc: "Written in TS, ships .d.ts, runs .ts migrations." },
+  {
+    id: "M02",
+    title: "Stored logs",
+    desc: "Every migration's output lives in its changelog entry.",
+  },
+  {
+    id: "M03",
+    title: "File-hash drift",
+    desc: "Detect edited migrations before they cause chaos.",
+  },
+  {
+    id: "M04",
+    title: "Custom templates",
+    desc: "Enforce team conventions with your own template files.",
+  },
+  {
+    id: "M05",
+    title: "TypeScript-native",
+    desc: "Written in TS, ships .d.ts, runs .ts migrations.",
+  },
   { id: "M06", title: "ESM-only", desc: "Modern Node 24+ with native ECMAScript modules." },
 ];
 
@@ -73,7 +89,6 @@ function copyInstall() {
               <span>GitHub</span>
             </a>
           </div>
-
         </div>
 
         <!-- ==================================================== -->
@@ -444,7 +459,9 @@ function copyInstall() {
   border-radius: 4px;
   padding: 4px 8px;
   cursor: pointer;
-  transition: color 0.15s ease, border-color 0.15s ease;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease;
   margin-left: 4px;
 }
 .install-copy:hover {

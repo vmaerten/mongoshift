@@ -141,8 +141,9 @@ try {
 ## `down`
 
 ```ts
-interface DownOptions extends RunOptions {
-  block?: boolean;
+interface DownOptions {
+  dryRun?: boolean; // default false
+  block?: boolean; // default false
 }
 
 interface DownResult {
@@ -163,8 +164,7 @@ entry's `migrationBlock` when `block: true`. Entries are rolled back in
 descending `fileName` order and removed from the changelog (unless `dryRun`).
 
 On failure, partial reports are attached to the thrown error as
-`err.rolledBack`. Note: `forceHash` on `DownOptions` is currently unused by
-`down`.
+`err.rolledBack`.
 
 ```ts
 await down(db, client, config, { block: true });
@@ -304,9 +304,16 @@ All types below are exported from `mongoshift`:
 | `MigrationStatus`          | `"PENDING" \| "APPLIED" \| "CHANGED"`.                   |
 | `StatusItem`               | One row returned by `status()`.                          |
 | `RunOptions`               | Options for `up()`.                                      |
-| `DownOptions`              | `RunOptions & { block? }`.                               |
+| `DownOptions`              | `{ dryRun?, block? }` for `down()`.                      |
 | `UpResult`/`DownResult`    | `{ dryRun, migrations }` run summaries.                  |
 | `MigrationRunReport`       | Per-file result object inside `UpResult`/`DownResult`.   |
 | `DatabaseHandle`           | Return type of `connect()`.                              |
 | `CreateOptions`            | Options for `create()`.                                  |
 | `InitOptions`/`InitResult` | Options and return shape for `init()`.                   |
+
+## Related guides
+
+- [Writing migrations](../guide/migrations.md) - migration file anatomy
+- [Dry-run mode](../guide/dry-run.md) - `RunOptions.dryRun` in practice
+- [Stored logs](../guide/stored-logs.md) - reading `MigrationRunReport.logs`
+- [File-hash drift](../guide/file-hash.md) - `HashDriftError` and `forceHash`
