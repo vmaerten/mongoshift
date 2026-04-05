@@ -51,11 +51,27 @@ const features = [
   },
 ];
 
-const comparison = [
-  { ours: "Dry-run built in", theirs: "Not supported" },
-  { ours: "Logs persisted in changelog", theirs: "Only console output" },
-  { ours: "File-hash drift warnings", theirs: "Silent hash comparison" },
-  { ours: "TypeScript source + .d.ts", theirs: "JSDoc types only" },
+const principles = [
+  {
+    id: "P1",
+    title: "Migrations should be auditable.",
+    desc: "Every change leaves a trail: logs, hash, timestamp, duration.",
+  },
+  {
+    id: "P2",
+    title: "Dry-run should be free.",
+    desc: "Not a paid tier. Not a separate mode. Just a flag.",
+  },
+  {
+    id: "P3",
+    title: "Drift should be loud.",
+    desc: "If an applied migration's file changes, you hear about it.",
+  },
+  {
+    id: "P4",
+    title: "TypeScript should be native.",
+    desc: "No generator, no adapter. Your .ts files just run.",
+  },
 ];
 </script>
 
@@ -194,31 +210,22 @@ const comparison = [
     </section>
 
     <!-- ========================================================== -->
-    <!-- Comparison                                                   -->
+    <!-- Principles                                                   -->
     <!-- ========================================================== -->
-    <section class="comparison" aria-labelledby="compare-heading">
+    <section class="principles" aria-labelledby="principles-heading">
       <header class="section-header">
-        <span class="section-tag">// diff against migrate-mongo</span>
-        <h2 id="compare-heading" class="section-title">What changed, line by line.</h2>
+        <span class="section-tag">// principles</span>
+        <h2 id="principles-heading" class="section-title">What we believe.</h2>
       </header>
-      <div class="diff-wrap">
-        <table class="diff-table">
-          <thead>
-            <tr>
-              <th class="col-marker"></th>
-              <th class="col-ours"><span class="marker added">+</span> mongoshift</th>
-              <th class="col-theirs"><span class="marker removed">−</span> migrate-mongo</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(row, i) in comparison" :key="i">
-              <td class="col-marker">{{ String(i + 1).padStart(2, "0") }}</td>
-              <td class="col-ours">{{ row.ours }}</td>
-              <td class="col-theirs">{{ row.theirs }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <ol class="principle-list">
+        <li v-for="p in principles" :key="p.id" class="principle-item">
+          <span class="principle-id">{{ p.id }}</span>
+          <div class="principle-body">
+            <h3 class="principle-title">{{ p.title }}</h3>
+            <p class="principle-desc">{{ p.desc }}</p>
+          </div>
+        </li>
+      </ol>
     </section>
 
     <!-- ========================================================== -->
@@ -740,7 +747,7 @@ const comparison = [
 }
 
 /* =====================================================================
-   Section scaffolding (features + comparison share)
+   Section scaffolding (features + principles share)
    ===================================================================== */
 
 .section-header {
@@ -896,97 +903,97 @@ const comparison = [
 }
 
 /* =====================================================================
-   Comparison diff table
+   Principles
    ===================================================================== */
 
-.comparison {
+.principles {
   padding-bottom: var(--section-gap);
   border-top: 1px solid var(--vp-c-divider);
   padding-top: var(--section-gap);
 }
 
-.diff-wrap {
+.principle-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
   border: 1px solid var(--vp-c-divider);
   border-radius: 10px;
   overflow: hidden;
   background: var(--vp-c-bg-soft);
 }
+@media (min-width: 720px) {
+  .principle-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
 
-.diff-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-family: var(--vp-font-family-base);
-}
-.diff-table th,
-.diff-table td {
-  padding: 14px 18px;
-  text-align: left;
-  vertical-align: middle;
-}
-.diff-table thead th {
-  font-family: var(--vp-font-family-mono);
-  font-size: 11.5px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--vp-c-text-2);
+.principle-item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 16px 18px;
+  padding: 22px 24px 26px;
   background: var(--vp-c-bg);
+  border-right: 1px solid var(--vp-c-divider);
   border-bottom: 1px solid var(--vp-c-divider);
 }
-.diff-table tbody tr {
-  border-bottom: 1px solid var(--vp-c-divider);
-  background: var(--vp-c-bg);
+@media (min-width: 720px) {
+  .principle-item:nth-child(2n) {
+    border-right: none;
+  }
+  .principle-item:nth-child(n + 3) {
+    border-bottom: none;
+  }
 }
-.diff-table tbody tr:last-child {
-  border-bottom: none;
+@media (max-width: 719px) {
+  .principle-item {
+    border-right: none;
+  }
+  .principle-item:last-child {
+    border-bottom: none;
+  }
 }
-.col-marker {
-  width: 52px;
+
+.principle-id {
+  grid-column: 1;
+  grid-row: 1 / span 2;
   font-family: var(--vp-font-family-mono);
   font-size: 11px;
-  font-weight: 600;
-  color: var(--vp-c-text-3);
-  text-align: center !important;
-  background: var(--vp-c-bg-soft);
-  border-right: 1px solid var(--vp-c-divider);
-}
-.col-ours {
-  font-size: 14.5px;
-  color: var(--vp-c-text-1);
-  font-weight: 500;
-}
-.col-theirs {
-  font-size: 14.5px;
-  color: var(--vp-c-text-3);
-  font-weight: 400;
-}
-.marker {
-  display: inline-block;
-  font-family: var(--vp-font-family-mono);
   font-weight: 700;
-  margin-right: 6px;
-  width: 12px;
+  letter-spacing: 0.06em;
+  color: var(--ms-violet-500);
+  padding-top: 3px;
 }
-.marker.added {
-  color: var(--ms-added);
-}
-.marker.removed {
-  color: var(--ms-removed);
+.dark .principle-id {
+  color: var(--ms-violet-400);
 }
 
-@media (max-width: 640px) {
-  .diff-table th,
-  .diff-table td {
-    padding: 12px 14px;
-    font-size: 13px;
-  }
-  .col-marker {
-    width: 38px;
-  }
-  .col-ours,
-  .col-theirs {
-    font-size: 13px;
-  }
+.principle-body {
+  grid-column: 2;
+  display: contents;
+}
+
+.principle-title {
+  grid-column: 2;
+  grid-row: 1;
+  margin: 0;
+  font-family: var(--vp-font-family-base);
+  font-size: 16.5px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  line-height: 1.35;
+  color: var(--vp-c-text-1);
+}
+
+.principle-desc {
+  grid-column: 2;
+  grid-row: 2;
+  margin: 6px 0 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--vp-c-text-2);
 }
 
 /* =====================================================================
