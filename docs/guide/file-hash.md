@@ -76,9 +76,7 @@ Use `status` to identify the offending files before deciding how to respond.
 When you **legitimately** need to edit an applied migration (fix a typo in a
 log message, add a comment), override the check explicitly:
 
-```bash
-npx mongoshift up --force-hash
-```
+<PmCommand cmd="up --force-hash" />
 
 Programmatically:
 

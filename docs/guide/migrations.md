@@ -80,11 +80,17 @@ Every `up` run stamps all applied migrations with the **same** `migrationBlock`
 number (`Date.now()` at the start of the run). This lets you roll back an
 entire batch at once:
 
-```bash
-npx mongoshift up     # applies 003, 004, 005 in one block
-npx mongoshift down              # rolls back just 005
-npx mongoshift down --block      # rolls back 003, 004, 005 together
-```
+Apply all pending (one block):
+
+<PmCommand cmd="up" />
+
+Roll back just the last applied migration:
+
+<PmCommand cmd="down" />
+
+Roll back the entire last block together:
+
+<PmCommand cmd="down --block" />
 
 Without `--block`, `down` rolls back **only the most recent migration**.
 

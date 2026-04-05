@@ -31,9 +31,7 @@ used whenever `migrationFileExtension` is `.js` or `.mjs`.
 
 Pass any file to `create` to use it as the source:
 
-```bash
-npx mongoshift create "add products index" --template ./migrations/_template.ts
-```
+<PmCommand cmd='create "add products index" --template ./migrations/_template.ts' />
 
 The file is read verbatim and written as the new migration's contents - no
 placeholder substitution. Put whatever boilerplate your team needs (imports,

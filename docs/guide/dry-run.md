@@ -74,11 +74,9 @@ export const up = async (db, client, ctx) => {
 
 ### CLI
 
-```bash
-npx mongoshift up --dry-run
-npx mongoshift down --dry-run
-npx mongoshift down --dry-run --block
-```
+<PmCommand cmd="up --dry-run" />
+<PmCommand cmd="down --dry-run" />
+<PmCommand cmd="down --dry-run --block" />
 
 Output looks like normal output, labelled `DRY-RUN UP` / `DRY-RUN DOWN`, with
 each migration tagged `[SKIP]` instead of `[OK]`:

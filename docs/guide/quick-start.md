@@ -11,9 +11,7 @@ npm install mongoshift mongodb
 
 ## 2. Init
 
-```bash
-npx mongoshift init
-```
+<PmCommand cmd="init" />
 
 Expected output:
 
@@ -33,9 +31,7 @@ mongodb: {
 
 ## 3. Create a migration
 
-```bash
-npx mongoshift create "create users"
-```
+<PmCommand cmd='create "create users"' />
 
 Expected output:
 
@@ -62,9 +58,7 @@ export const down = async (db: Db, client: MongoClient, ctx: MigrationContext) =
 
 ## 4. Run `up`
 
-```bash
-npx mongoshift up
-```
+<PmCommand cmd="up" />
 
 Expected output:
 
@@ -79,9 +73,7 @@ The logger line is stored in the changelog document - see
 
 ## 5. Check `status`
 
-```bash
-npx mongoshift status
-```
+<PmCommand cmd="status" />
 
 Expected output:
 
@@ -98,9 +90,7 @@ Statuses: `PENDING`, `APPLIED`, `CHANGED` (only when
 
 ## 6. Roll back with `down`
 
-```bash
-npx mongoshift down
-```
+<PmCommand cmd="down" />
 
 Expected output:
 
@@ -113,9 +103,7 @@ Running `status` again shows the migration back to `PENDING`.
 
 ## 7. Try `--dry-run`
 
-```bash
-npx mongoshift up --dry-run
-```
+<PmCommand cmd="up --dry-run" />
 
 Expected output:
 

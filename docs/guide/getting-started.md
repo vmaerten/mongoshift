@@ -21,33 +21,13 @@ separate TypeScript runtime.
 
 Install alongside the official `mongodb` driver, which is a peer dependency:
 
-::: code-group
-
-```bash [pnpm]
-pnpm add mongoshift mongodb
-```
-
-```bash [npm]
-npm install mongoshift mongodb
-```
-
-```bash [yarn]
-yarn add mongoshift mongodb
-```
-
-```bash [bun]
-bun add mongoshift mongodb
-```
-
-:::
+<PmCommand install="mongoshift mongodb" />
 
 ## Scaffold a project
 
 Run `init` at the root of your project:
 
-```bash
-npx mongoshift init
-```
+<PmCommand cmd="init" />
 
 This creates two things:
 
@@ -56,9 +36,7 @@ This creates two things:
 
 Pass `--js` if you prefer a JavaScript config:
 
-```bash
-npx mongoshift init --js
-```
+<PmCommand cmd="init --js" />
 
 The generated config looks like this:
 
@@ -116,9 +94,7 @@ the process cwd.
 
 ## Create your first migration
 
-```bash
-npx mongoshift create "add users collection"
-```
+<PmCommand cmd='create "add users collection"' />
 
 This writes a timestamped file into `migrations/`, e.g.:
 
@@ -155,9 +131,7 @@ names in order:
 
 Override the lookup with `-f / --file`:
 
-```bash
-npx mongoshift up --file ./configs/prod.config.ts
-```
+<PmCommand cmd="up --file ./configs/prod.config.ts" />
 
 ---
 
