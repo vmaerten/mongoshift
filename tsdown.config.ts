@@ -18,6 +18,6 @@ export default defineConfig({
   // mongodb is a peer dep; commander + cli-table3 are runtime deps kept external
   // to follow Node convention (let npm install + dedupe them on the user side).
   deps: {
-    neverBundle: ["mongodb", "commander", "cli-table3"],
+    neverBundle: ["mongodb", "commander", "cli-table3", "dayjs"],
   },
 });

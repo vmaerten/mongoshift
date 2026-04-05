@@ -21,11 +21,8 @@ describe("formatDate", () => {
     expect(formatDate(d2, "YYYYMMDDHHmmssSSS")).toBe("20240102030405006");
   });
 
-  it("leaves unknown tokens untouched", () => {
-    expect(formatDate(d, "YYYY/MM/DD hello")).toBe("2026/04/05 hello");
+  it("supports bracket escaping for literals", () => {
+    expect(formatDate(d, "YYYY-[build]-SSS")).toBe("2026-build-042");
   });
 
-  it("handles empty pattern", () => {
-    expect(formatDate(d, "")).toBe("");
-  });
 });

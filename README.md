@@ -76,7 +76,7 @@ const config: Config = {
   mongodb: { url: "mongodb://localhost:27017", databaseName: "my_db" },
   migrationsDir: "migrations",
   migrationFileExtension: ".ts",
-  dateFormat: "YYYYMMDDHHmmss",         // tokens: YYYY MM DD HH mm ss SSS
+  dateFormat: "YYYYMMDDHHmmss",         // dayjs tokens (wrap literals in [brackets])
   changelogCollectionName: "changelog",
   useFileHash: false,
   moduleSystem: "esm",
