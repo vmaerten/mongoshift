@@ -8,7 +8,7 @@ and first-class TypeScript support.
 - **Dry-run** via `up({ dryRun: true })` and `--dry-run` CLI flag
 - **Stored logs**: every migration's `ctx.logger` output is persisted inline
   in the changelog entry (level, message, timestamp, duration)
-- **Optional file-hash drift detection** (`useFileHash: true`) — refuses to run
+- **Optional file-hash drift detection** (`useFileHash: true`) - refuses to run
   if an applied migration's file has changed
 - **Configurable** changelog collection name, timestamp `dateFormat`, custom
   migration templates (`--template` or `sample-migration.ts`)
@@ -102,7 +102,7 @@ export default config;
 Everything else maps 1:1: `mongodb`, `migrationsDir`, `migrationFileExtension`,
 `changelogCollectionName`, `useFileHash`.
 
-### 2. Migration signature — **breaking change**
+### 2. Migration signature - **breaking change**
 
 migrate-mongo:
 
@@ -121,7 +121,7 @@ export const up = async (db, client, ctx) => {
 };
 ```
 
-Old migrations that ignore the 3rd parameter keep working unchanged — the
+Old migrations that ignore the 3rd parameter keep working unchanged - the
 logger and dryRun flag are simply unused. You only need to touch your files if
 you want to use those features.
 
@@ -153,9 +153,9 @@ await db
 
 ### 5. Dropped features (for now)
 
-- **Locks** (`lockCollectionName` / `lockTtl`) — planned; use an external
+- **Locks** (`lockCollectionName` / `lockTtl`) - planned; use an external
   lock for now if you run concurrent deploys.
-- **CJS support** — ESM only.
+- **CJS support** - ESM only.
 
 ---
 
