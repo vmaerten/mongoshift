@@ -378,66 +378,21 @@ function copyInstall() {
   font-family: var(--vp-font-family-base);
 }
 .cta-primary {
-  position: relative;
-  overflow: hidden;
   background: var(--ms-violet-500);
   color: #ffffff;
   border-color: var(--ms-violet-500);
-  box-shadow:
-    0 1px 0 rgba(0, 0, 0, 0.05),
-    inset 0 1px 0 rgba(255, 255, 255, 0.12);
-  transition:
-    box-shadow 0.22s cubic-bezier(0.22, 1, 0.36, 1),
-    border-color 0.18s ease;
-}
-.cta-primary > * {
-  position: relative;
-  z-index: 1;
-}
-/* Diagonal shimmer that sweeps across on hover, like a scanline passing
-   through an armed terminal prompt */
-.cta-primary::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    110deg,
-    transparent 30%,
-    rgba(255, 255, 255, 0.22) 50%,
-    transparent 70%
-  );
-  transform: translateX(-101%);
-  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
-  pointer-events: none;
-  z-index: 0;
-}
-.cta-primary:hover::before {
-  transform: translateX(101%);
 }
 .cta-primary:hover {
-  border-color: var(--ms-violet-300);
-  box-shadow:
-    0 1px 0 rgba(0, 0, 0, 0.05),
-    inset 0 1px 0 rgba(255, 255, 255, 0.22),
-    0 0 0 1px rgba(196, 181, 253, 0.35),
-    0 8px 24px -4px rgba(139, 92, 246, 0.5);
-}
-.cta-primary:focus-visible {
-  outline: none;
-  border-color: var(--ms-violet-300);
-  box-shadow:
-    0 1px 0 rgba(0, 0, 0, 0.05),
-    inset 0 1px 0 rgba(255, 255, 255, 0.22),
-    0 0 0 2px var(--ms-violet-300),
-    0 8px 24px -4px rgba(139, 92, 246, 0.5);
+  background: var(--ms-violet-600);
+  border-color: var(--ms-violet-600);
 }
 .cta-arrow {
   display: inline-block;
   font-family: var(--vp-font-family-mono);
-  transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 0.15s ease;
 }
 .cta-primary:hover .cta-arrow {
-  transform: translateX(4px);
+  transform: translateX(3px);
 }
 .cta-secondary {
   background: transparent;
