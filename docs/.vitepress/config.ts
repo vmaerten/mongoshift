@@ -6,7 +6,7 @@ const FULL_DESC =
 
 export default defineConfig({
   title: "mongoshift",
-  titleTemplate: ":title - mongoshift docs",
+  titleTemplate: ":title | mongoshift",
   description: FULL_DESC,
   lang: "en-US",
   cleanUrls: true,

@@ -2,7 +2,7 @@
 description: "Install mongoshift, create a config file, and write your first MongoDB migration in minutes."
 ---
 
-# Getting started
+# Getting Started with MongoDB Migrations
 
 Install mongoshift, scaffold a config file, and create your first migration in
 under a minute. This page covers the one-time setup; head to

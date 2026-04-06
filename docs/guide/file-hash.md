@@ -2,7 +2,7 @@
 description: "Detect when applied migration files have been edited using SHA-256 file-hash drift detection."
 ---
 
-# File-hash drift detection
+# MongoDB Migration Drift Detection
 
 When `useFileHash: true`, mongoshift records a SHA-256 hash of every migration
 file it applies. On subsequent runs it compares the stored hash against the

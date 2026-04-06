@@ -2,7 +2,7 @@
 description: "Preview MongoDB migrations against a real database without persisting to the changelog using dry-run mode."
 ---
 
-# Dry-run
+# Dry-Run MongoDB Migrations
 
 Dry-run lets you **preview a migration against a real database** without
 committing it to history. The migration body still executes; the changelog

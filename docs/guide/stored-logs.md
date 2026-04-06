@@ -2,7 +2,7 @@
 description: "Every migration log line is captured and stored inline in the changelog entry for audit and debugging."
 ---
 
-# Stored logs
+# Stored MongoDB Migration Logs
 
 Every log emitted via `ctx.logger` is captured and **persisted inline in the
 changelog entry**. No separate log store, no grep through CI output - the

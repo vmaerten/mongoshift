@@ -2,7 +2,7 @@
 description: "Why mongoshift exists - dry-run, stored logs, file-hash drift detection, and TypeScript-native migrations for MongoDB."
 ---
 
-# Why mongoshift
+# Why mongoshift: A Modern MongoDB Migration Tool
 
 If you're running MongoDB migrations today, you're probably using
 [migrate-mongo](https://github.com/seppevs/migrate-mongo). It works. It's

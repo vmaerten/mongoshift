@@ -2,7 +2,7 @@
 description: "Customize migration file templates and configure the timestamp date format for generated filenames."
 ---
 
-# Templates and date formatting
+# MongoDB Migration Templates and Date Formatting
 
 When you run `mongoshift create "<name>"`, a new file is written to
 `migrationsDir`. Its **name** is driven by `dateFormat`, and its **contents**

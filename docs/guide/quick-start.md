@@ -2,7 +2,7 @@
 description: "Go from zero to applied migration in five minutes with this step-by-step MongoDB migration walkthrough."
 ---
 
-# Quick start
+# Quick Start: MongoDB Migrations in 5 Minutes
 
 Go from zero to applied-migration in five minutes. Assumes Node 24+ and a
 running MongoDB on `localhost:27017`.
