@@ -1,24 +1,77 @@
-import { defineConfig } from "vitepress";
+import { defineConfig, type HeadConfig } from "vitepress";
+
+const HOSTNAME = "https://mongoshift.dev";
+const FULL_DESC =
+  "MongoDB migrations with receipts. Dry-run, stored logs, file-hash drift detection, TypeScript-native.";
 
 export default defineConfig({
   title: "mongoshift",
-  description:
-    "MongoDB migrations with receipts. Dry-run, stored logs, file-hash drift detection, TypeScript-native.",
+  titleTemplate: ":title - mongoshift docs",
+  description: FULL_DESC,
   lang: "en-US",
   cleanUrls: true,
 
   sitemap: {
-    hostname: "https://mongoshift.dev",
+    hostname: HOSTNAME,
   },
 
   transformHead({ pageData }) {
-    const url = `https://mongoshift.dev/${pageData.relativePath}`
+    const url = `${HOSTNAME}/${pageData.relativePath}`
       .replace(/index\.md$/, "")
       .replace(/\.md$/, "");
-    return [
+    const title = pageData.frontmatter.title || pageData.title || "mongoshift";
+    const desc = pageData.frontmatter.description || FULL_DESC;
+    const isHome = pageData.relativePath === "index.md";
+
+    const tags: HeadConfig[] = [
       ["link", { rel: "canonical", href: url }],
       ["meta", { property: "og:url", content: url }],
+      ["meta", { property: "og:title", content: title }],
+      ["meta", { property: "og:description", content: desc }],
+      ["meta", { name: "twitter:title", content: title }],
+      ["meta", { name: "twitter:description", content: desc }],
     ];
+
+    // Build breadcrumb JSON-LD from path segments.
+    const crumbs: Array<{ name: string; url: string }> = [{ name: "Home", url: HOSTNAME }];
+    const parts = pageData.relativePath.replace(/\.md$/, "").split("/").filter(Boolean);
+    if (parts.length > 0 && parts[0] !== "index") {
+      if (parts[0] === "guide")
+        crumbs.push({ name: "Guide", url: `${HOSTNAME}/guide/getting-started` });
+      if (parts[0] === "reference")
+        crumbs.push({ name: "Reference", url: `${HOSTNAME}/reference/config` });
+      if (parts.length > 1) crumbs.push({ name: title, url });
+    }
+
+    const breadcrumbLd = {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: crumbs.map((c, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        name: c.name,
+        item: c.url,
+      })),
+    };
+
+    tags.push(["script", { type: "application/ld+json" }, JSON.stringify(breadcrumbLd)]);
+
+    // Homepage: add SoftwareApplication schema.
+    if (isHome) {
+      const appLd = {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        name: "mongoshift",
+        description: FULL_DESC,
+        url: HOSTNAME,
+        applicationCategory: "DeveloperApplication",
+        operatingSystem: "Linux, macOS, Windows",
+        offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+      };
+      tags.push(["script", { type: "application/ld+json" }, JSON.stringify(appLd)]);
+    }
+
+    return tags;
   },
 
   head: [
@@ -28,29 +81,11 @@ export default defineConfig({
     ["link", { rel: "apple-touch-icon", sizes: "180x180", href: "/apple-touch-icon.png" }],
     ["meta", { name: "theme-color", content: "#8B5CF6" }],
     ["meta", { property: "og:type", content: "website" }],
-    ["meta", { property: "og:title", content: "mongoshift" }],
-    [
-      "meta",
-      {
-        property: "og:description",
-        content:
-          "MongoDB migrations with receipts. Dry-run, stored logs, file-hash drift detection.",
-      },
-    ],
-    ["meta", { property: "og:image", content: "https://mongoshift.dev/og-image.png" }],
+    ["meta", { property: "og:image", content: `${HOSTNAME}/og-image.png` }],
     ["meta", { property: "og:image:width", content: "1200" }],
     ["meta", { property: "og:image:height", content: "630" }],
     ["meta", { name: "twitter:card", content: "summary_large_image" }],
-    ["meta", { name: "twitter:title", content: "mongoshift" }],
-    [
-      "meta",
-      {
-        name: "twitter:description",
-        content:
-          "MongoDB migrations with receipts. Dry-run, stored logs, file-hash drift detection.",
-      },
-    ],
-    ["meta", { name: "twitter:image", content: "https://mongoshift.dev/og-image.png" }],
+    ["meta", { name: "twitter:image", content: `${HOSTNAME}/og-image.png` }],
     ["meta", { name: "twitter:creator", content: "@v_maerten" }],
     ["meta", { property: "og:site_name", content: "mongoshift" }],
     ["meta", { property: "og:locale", content: "en_US" }],
