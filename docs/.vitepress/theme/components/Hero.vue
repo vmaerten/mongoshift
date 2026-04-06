@@ -6,6 +6,7 @@
  * (timestamps, blocks, diff markers, line numbers).
  */
 import { ref, onMounted } from "vue";
+import logoUrl from "../assets/logo.png";
 
 const mounted = ref(false);
 onMounted(() => {
@@ -55,21 +56,14 @@ function copyInstall() {
     <section class="hero" aria-labelledby="hero-headline">
       <div class="hero-grid">
         <div class="hero-copy">
-          <p class="eyebrow">
-            <svg
-              class="eyebrow-mongo"
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="#00ED64"
-              aria-hidden="true"
-            >
-              <path
-                d="M17.193 9.555c-1.264-5.58-4.252-7.414-4.573-8.115-.28-.394-.53-.954-.735-1.44-.036.495-.055.685-.523 1.184-.723.566-4.438 3.682-4.74 10.02-.282 5.912 4.27 9.435 4.888 9.884l.07.05A73.49 73.49 0 0111.91 24h.481c.114-1.032.284-2.056.51-3.07.417-.296.604-.463.85-.693a11.342 11.342 0 003.639-8.464c.01-.814-.103-1.662-.197-2.218zm-5.336 8.195s0-8.291.275-8.29c.213 0 .49 10.695.49 10.695-.381-.045-.765-1.76-.765-2.405z"
-              />
-            </svg>
-            MongoDB migrations
-          </p>
+          <div class="hero-brand">
+            <img
+              :src="logoUrl"
+              alt="mongoshift logo"
+              class="hero-brand-icon"
+            />
+            <span class="hero-brand-name">mongoshift</span>
+          </div>
           <h1 id="hero-headline" class="headline">
             MongoDB migrations
             <span class="headline-accent">with receipts.</span>
@@ -289,21 +283,33 @@ function copyInstall() {
   transform: translateY(0);
 }
 
-.eyebrow {
-  font-family: var(--vp-font-family-mono);
-  font-size: 12px;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--vp-c-text-2);
+.hero-brand {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  margin: 0 0 20px;
+  gap: 20px;
+  margin: 0 0 36px;
 }
-.eyebrow-mongo {
-  display: inline-block;
-  vertical-align: -2px;
+.hero-brand-icon {
+  width: 72px;
+  height: 72px;
+  display: block;
+}
+.hero-brand-name {
+  font-family: var(--vp-font-family-mono);
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--vp-c-text-1);
+  line-height: 1;
+}
+@media (max-width: 640px) {
+  .hero-brand-icon {
+    width: 56px;
+    height: 56px;
+  }
+  .hero-brand-name {
+    font-size: 28px;
+  }
 }
 
 .headline {
