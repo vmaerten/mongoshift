@@ -10,7 +10,7 @@
     "mongodb",
     "typescript"
   ],
-  "homepage": "https://github.com/vmaerten/mongoshift#readme",
+  "homepage": "https://mongoshift.dev",
   "bugs": {
     "url": "https://github.com/vmaerten/mongoshift/issues"
   },
@@ -50,7 +50,10 @@
     "test": "vitest run --exclude test/integration.test.ts",
     "test:watch": "vitest --exclude test/integration.test.ts",
     "test:integration": "vitest run test/integration.test.ts",
-    "test:all": "vitest run"
+    "test:all": "vitest run",
+    "docs:dev": "pnpm --dir docs dev",
+    "docs:build": "pnpm --dir docs build",
+    "docs:preview": "pnpm --dir docs preview"
   },
   "dependencies": {
     "cli-table3": "^0.6.5",
