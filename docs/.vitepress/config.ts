@@ -92,7 +92,7 @@ export default defineConfig({
   ],
 
   themeConfig: {
-    logo: "/logo.png",
+    logo: { src: "/logo.png", alt: "mongoshift" },
     siteTitle: "mongoshift",
 
     nav: [
