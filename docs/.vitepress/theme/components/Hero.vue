@@ -57,11 +57,7 @@ function copyInstall() {
       <div class="hero-grid">
         <div class="hero-copy">
           <div class="hero-brand">
-            <img
-              :src="logoUrl"
-              alt="mongoshift logo"
-              class="hero-brand-icon"
-            />
+            <img :src="logoUrl" alt="mongoshift logo" class="hero-brand-icon" />
             <span class="hero-brand-name">mongoshift</span>
           </div>
           <h1 id="hero-headline" class="headline">

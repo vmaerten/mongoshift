@@ -10,7 +10,7 @@
     "mongodb",
     "typescript"
   ],
-  "homepage": "https://github.com/vmaerten/mongoshift#readme",
+  "homepage": "https://mongoshift.dev",
   "bugs": {
     "url": "https://github.com/vmaerten/mongoshift/issues"
   },

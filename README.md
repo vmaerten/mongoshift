@@ -7,6 +7,12 @@
   and first-class TypeScript support.
 </p>
 
+<p align="center">
+  <a href="https://mongoshift.dev">Documentation</a> &nbsp;|&nbsp;
+  <a href="https://github.com/vmaerten/mongoshift">GitHub</a> &nbsp;|&nbsp;
+  <a href="https://www.npmjs.com/package/mongoshift">npm</a>
+</p>
+
 **Highlights**
 
 - **Dry-run** via `up({ dryRun: true })` and `--dry-run` CLI flag
