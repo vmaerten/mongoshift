@@ -1,3 +1,7 @@
+---
+description: "Complete reference for the mongoshift Config object - every option, default, and resolution behavior."
+---
+
 # Config reference
 
 The `Config` object fully describes a mongoshift project. It is exported as the

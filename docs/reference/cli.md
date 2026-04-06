@@ -1,3 +1,7 @@
+---
+description: "CLI reference for mongoshift - init, create, up, down, status commands with all flags and exit codes."
+---
+
 # CLI reference
 
 The `mongoshift` binary is implemented with [commander](https://github.com/tj/commander.js).

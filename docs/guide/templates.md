@@ -1,3 +1,7 @@
+---
+description: "Customize migration file templates and configure the timestamp date format for generated filenames."
+---
+
 # Templates and date formatting
 
 When you run `mongoshift create "<name>"`, a new file is written to

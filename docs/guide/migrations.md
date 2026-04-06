@@ -1,3 +1,7 @@
+---
+description: "How to write mongoshift migrations - file anatomy, ctx parameter, ordering, migration blocks, and best practices."
+---
+
 # Writing migrations
 
 A migration is an ESM module that exports two async functions: `up` and

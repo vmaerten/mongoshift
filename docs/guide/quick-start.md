@@ -1,3 +1,7 @@
+---
+description: "Go from zero to applied migration in five minutes with this step-by-step MongoDB migration walkthrough."
+---
+
 # Quick start
 
 Go from zero to applied-migration in five minutes. Assumes Node 24+ and a

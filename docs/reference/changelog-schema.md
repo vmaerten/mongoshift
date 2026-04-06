@@ -1,3 +1,7 @@
+---
+description: "MongoDB document schema for changelog entries - fileName, appliedAt, logs, fileHash, durationMs, migrationBlock."
+---
+
 # Changelog schema
 
 mongoshift persists a document per applied migration into MongoDB. The

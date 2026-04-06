@@ -1,3 +1,7 @@
+---
+description: "Step-by-step guide to migrate from migrate-mongo to mongoshift - config, signature, CLI, and changelog."
+---
+
 # Migrating from migrate-mongo
 
 `mongoshift` is designed as a drop-in successor to

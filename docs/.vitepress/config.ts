@@ -7,6 +7,20 @@ export default defineConfig({
   lang: "en-US",
   cleanUrls: true,
 
+  sitemap: {
+    hostname: "https://mongoshift.dev",
+  },
+
+  transformHead({ pageData }) {
+    const url = `https://mongoshift.dev/${pageData.relativePath}`
+      .replace(/index\.md$/, "")
+      .replace(/\.md$/, "");
+    return [
+      ["link", { rel: "canonical", href: url }],
+      ["meta", { property: "og:url", content: url }],
+    ];
+  },
+
   head: [
     [
       "link",
@@ -41,6 +55,9 @@ export default defineConfig({
       },
     ],
     ["meta", { name: "twitter:image", content: "https://mongoshift.dev/og-image.png" }],
+    ["meta", { name: "twitter:creator", content: "@v_maerten" }],
+    ["meta", { property: "og:site_name", content: "mongoshift" }],
+    ["meta", { property: "og:locale", content: "en_US" }],
   ],
 
   themeConfig: {

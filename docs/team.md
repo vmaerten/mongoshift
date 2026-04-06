@@ -1,6 +1,7 @@
 ---
 layout: page
 title: Team
+description: "The team behind mongoshift - maintainers and contributors."
 ---
 
 <script setup>

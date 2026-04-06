@@ -1,3 +1,7 @@
+---
+description: "Programmatic API reference - loadConfig, connect, up, down, status, create, init, and all TypeScript types."
+---
+
 # Programmatic API
 
 Everything in this page is re-exported from the package entry point:

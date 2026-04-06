@@ -1,3 +1,7 @@
+---
+description: "Every migration log line is captured and stored inline in the changelog entry for audit and debugging."
+---
+
 # Stored logs
 
 Every log emitted via `ctx.logger` is captured and **persisted inline in the

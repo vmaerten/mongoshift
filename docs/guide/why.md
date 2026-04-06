@@ -1,3 +1,7 @@
+---
+description: "Why mongoshift exists - dry-run, stored logs, file-hash drift detection, and TypeScript-native migrations for MongoDB."
+---
+
 # Why mongoshift
 
 If you're running MongoDB migrations today, you're probably using
