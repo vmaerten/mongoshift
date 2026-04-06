@@ -1,7 +1,11 @@
-# mongoshift
+<p align="center">
+  <img src="assets/logo-wordmark.png" alt="mongoshift" width="400" />
+</p>
 
-A MongoDB migration tool with dry-run, file-hash drift detection, stored logs,
-and first-class TypeScript support.
+<p align="center">
+  A MongoDB migration tool with dry-run, file-hash drift detection, stored logs,
+  and first-class TypeScript support.
+</p>
 
 **Highlights**
 

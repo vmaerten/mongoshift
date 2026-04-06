@@ -5,5 +5,5 @@ dist
 coverage
 docs/.vitepress/dist
 docs/.vitepress/cache
-logo-icon.png
-logo-wordmark.png
+/logo-icon.png
+/logo-wordmark.png
