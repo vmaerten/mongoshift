@@ -65,7 +65,8 @@ top-level fields fall back to defaults.
 - **Type:** `string`
 - **Default:** `"YYYYMMDDHHmmss"`
 - **Description:** Token format used to prefix generated migration file names.
-  Supported tokens: `YYYY`, `MM`, `DD`, `HH`, `mm`, `ss`, `SSS`.
+  All [dayjs format tokens](https://day.js.org/docs/en/display/format) are
+  supported. Wrap literal text in brackets: `YYYY-[build]-SSS`.
 
 ### `changelogCollectionName`
 

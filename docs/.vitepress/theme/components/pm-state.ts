@@ -33,17 +33,17 @@ export const PM_LABELS: Record<PmChoice, string> = {
 /**
  * Returns the full command string for a given package manager + mongoshift subcommand.
  * Examples:
- *   buildRunCommand("pnpm", "init") -> "pnpm mongoshift init"
+ *   buildRunCommand("pnpm", "init") -> "pnpm dlx mongoshift init"
  *   buildRunCommand("npm", "up --dry-run") -> "npx mongoshift up --dry-run"
  */
 export function buildRunCommand(pm: PmChoice, cmd: string): string {
   switch (pm) {
     case "pnpm":
-      return `pnpm mongoshift ${cmd}`;
+      return `pnpm dlx mongoshift ${cmd}`;
     case "npm":
       return `npx mongoshift ${cmd}`;
     case "yarn":
-      return `yarn mongoshift ${cmd}`;
+      return `yarn dlx mongoshift ${cmd}`;
     case "bun":
       return `bunx mongoshift ${cmd}`;
   }

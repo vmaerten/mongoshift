@@ -27,7 +27,7 @@ export default defineConfig({
           "MongoDB migrations with receipts. Dry-run, stored logs, file-hash drift detection.",
       },
     ],
-    ["meta", { property: "og:image", content: "https://mongoshift.dev/og-image.svg" }],
+    ["meta", { property: "og:image", content: "https://mongoshift.dev/og-image.png" }],
     ["meta", { property: "og:image:width", content: "1200" }],
     ["meta", { property: "og:image:height", content: "630" }],
     ["meta", { name: "twitter:card", content: "summary_large_image" }],
@@ -40,7 +40,7 @@ export default defineConfig({
           "MongoDB migrations with receipts. Dry-run, stored logs, file-hash drift detection.",
       },
     ],
-    ["meta", { name: "twitter:image", content: "https://mongoshift.dev/og-image.svg" }],
+    ["meta", { name: "twitter:image", content: "https://mongoshift.dev/og-image.png" }],
   ],
 
   themeConfig: {
