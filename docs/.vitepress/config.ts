@@ -8,7 +8,7 @@ export default defineConfig({
   cleanUrls: true,
 
   head: [
-    ["link", { rel: "icon", href: "/logo.svg", type: "image/svg+xml" }],
+    ["link", { rel: "icon", href: "/logo.png", type: "image/png" }],
     ["meta", { name: "theme-color", content: "#8B5CF6" }],
     ["meta", { property: "og:type", content: "website" }],
     ["meta", { property: "og:title", content: "mongoshift" }],
@@ -37,7 +37,7 @@ export default defineConfig({
   ],
 
   themeConfig: {
-    logo: "/logo.svg",
+    logo: "/logo.png",
     siteTitle: "mongoshift",
 
     nav: [
